@@ -17,7 +17,7 @@ npm install
 
 ### Compiles and hot-reloads for development
 ```
-npm run electron:serve
+npm run serve
 ```
 **What does it do:** Creates a local server to preview the site
 
