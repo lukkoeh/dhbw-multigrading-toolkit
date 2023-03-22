@@ -1,19 +1,31 @@
-# projektarbeit-sem2
+# DHBW-Mosbach Grading tool
+
+## Core components
+- vue.js https://vuejs.org/
+- electron.js https://www.electronjs.org/
+- tailwindCSS https://tailwindcss.com/
+
+## Useful Tutorials & Docs
+- https://tailwindcss.com/docs/installation
+- https://vuejs.org/tutorial/#step-1
 
 ## Project setup
 ```
 npm install
 ```
+**What does it do:** installs all dependencies of our app into the current directory
 
 ### Compiles and hot-reloads for development
 ```
-npm run serve
+npm run electron:serve
 ```
+**What does it do:** Creates a local server to preview the site
 
 ### Compiles and minifies for production
 ```
-npm run build
+npm run electron:build
 ```
+
 
 ### Lints and fixes files
 ```
