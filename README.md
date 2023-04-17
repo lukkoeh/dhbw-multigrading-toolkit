@@ -1,7 +1,5 @@
 # DHBW-Multigrading-Toolkit
 
----
-
 ## Uses libraries
 - Angular: [Website](https://angular.io/)
 
