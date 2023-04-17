@@ -12,17 +12,19 @@ jobs:
 
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v1
+        uses: actions/checkout@v3
 
       - name: Install Node.js, NPM and Yarn
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: 18
 
       - name: Install dependencies
         run: "npm install"
+      - name: Install Angular CLI
+        run: "npm install -g @angular/cli"
       - name: Build Angular App
-        run: "ng build"
+        run: "npm run build"
       - name: Run electron-forge to build the bundle
         run: "npm run make"
       - name: Upload artifacts
