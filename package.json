@@ -1,6 +1,6 @@
 {
   "name": "dhbw-multigrading-toolkit",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "Group 8",
   "description": "grading tool",
   "main": "main.js",
@@ -8,7 +8,7 @@
   "scripts": {
     "ng": "ng",
     "start": "electron-forge start",
-    "build": "ng build",
+    "build": "tsc main.ts && ng build --base-href ./",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "package": "electron-forge package",

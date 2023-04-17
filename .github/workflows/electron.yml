@@ -21,6 +21,8 @@ jobs:
 
       - name: Install dependencies
         run: "npm install"
+      - name: Build Angular App
+        run: "ng build"
       - name: Run electron-forge to build the bundle
         run: "npm run make"
       - name: Upload artifacts
