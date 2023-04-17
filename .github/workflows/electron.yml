@@ -19,9 +19,12 @@ jobs:
         with:
           node-version: 18
 
-      - name: Build/release Electron app
-        uses: samuelmeuli/action-electron-builder@v1
+      - name: Install dependencies
+        run: "npm install"
+      - name: Run electron-forge to build the bundle
+        run: "npm run make"
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
         with:
-          # GitHub token, automatically provided to the action
-          # (No need to define this secret in the repo settings)
-          github_token: ${{ secrets.github_token }}
+          name: release
+          path: out/make/
