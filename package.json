@@ -13,7 +13,9 @@
     "test": "ng test",
     "package": "electron-forge package",
     "make": "electron-forge make",
-    "electron": "tsc main.ts && ng build --base-href ./ && electron ."
+    "electron": "tsc main.ts && ng build --base-href ./ && electron .",
+    "production": "tsc main.ts && ng build --base-href ./ && electron-forge make",
+    "web": "ng serve --watch --open"
   },
   "private": true,
   "dependencies": {

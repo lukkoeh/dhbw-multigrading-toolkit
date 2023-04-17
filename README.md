@@ -1,27 +1,51 @@
-# DhbwMultigradingToolkit
+# DHBW-Multigrading-Toolkit
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.6.
+---
 
-## Development server
+## Uses libraries
+- Angular: [Website](https://angular.io/)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Basic Workflow
+### Prerequesites
+You need the following pieces of software prior to using this guide:
+- Node.js 18 LTS
+### Installation
+To build and use this application, you will need the angular-cli, which can be installed using the following command.
 
-## Code scaffolding
+``
+npm install -g @angular/cli
+``
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+After this, you need to install the rest of the dependencies defined in package.json.
 
-## Build
+``
+npm install
+``
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### Building the application
+To generate the output files and get the application ready for web-preview, you may use the following command:
 
-## Running unit tests
+``
+npm run build
+``
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+To generate the Electron-Bundles and package the application for production, use:
 
-## Running end-to-end tests
+``
+npm run production
+``
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+### Development-Workflow
+To get a preview of the electron application for testing, you may refer to the following command:
 
-## Further help
+``
+npm run electron
+``
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+To just view a live-webview (for example for UI only development), you may use the faster command:
+
+``
+npm run web
+``
+
+**Note:** Usually it is not neccessary to build the app for production on device, because all changes on the main branch are automatically built by CI/CD.
