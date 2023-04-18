@@ -5,6 +5,11 @@
   "description": "grading tool",
   "main": "main.js",
   "license": "Unlicense",
+  "browser": {
+    "fs": false,
+    "path": false,
+    "os": false
+  },
   "scripts": {
     "ng": "ng",
     "start": "electron-forge start",
@@ -30,6 +35,7 @@
     "electron-squirrel-startup": "^1.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.19.3/xlsx-0.19.3.tgz",
     "zone.js": "~0.12.0"
   },
   "devDependencies": {
