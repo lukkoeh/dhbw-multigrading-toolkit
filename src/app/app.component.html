@@ -1,5 +1,5 @@
 <div>
   <input type="file" name="csvfile" accept="text/csv" id="csvfile" (change)="handleFile($event)">
-  <p id="csvOutput">{{csvData}}</p>
+  <div id="csvOutput" [innerHTML]="csvData"></div>
 </div>
 <router-outlet></router-outlet>
