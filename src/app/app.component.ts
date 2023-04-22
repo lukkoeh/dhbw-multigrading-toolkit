@@ -22,19 +22,36 @@ export class AppComponent {
     });
     let dataarray = jsonObject.slice(this.datastart-1)
     let metaarray = jsonObject.splice(0, 9)
+
+    /*----RENDER METADATA TABLE----*/
     this.csvData = utils.sheet_to_html(workbookmeta.Sheets[workbookmeta.SheetNames[0]], {})
-    this.csvData += "<table>"
-    for (let i : number = 0; i<dataarray.length; i++) {
-        if (i === 0) {
-          this.csvData += "<th>"
-          this.csvData += dataarray[i][0]
-          this.csvData += dataarray[i][1]
-          this.csvData += dataarray[i][2]
-          this.csvData += dataarray[i][3]
-          this.csvData += "</th>"
-        }
+
+    /*----RENDER DATA TABLE----*/
+    // headers
+    this.csvData += "<table><tr>";
+    for (let colIndex = 0; colIndex <=4; colIndex++) {
+      this.csvData += "<th>";
+      this.csvData += dataarray[0][colIndex];
+      this.csvData += "</th>";
     }
-    this.csvData += "</table>"
+    this.csvData += "</tr>";
+
+    // actual data
+    for (let rowIndex : number = 1; rowIndex<dataarray.length; rowIndex++) {
+      // Excel import results in "undefined" cells being displayed
+      if(dataarray[rowIndex][0] === undefined){
+        break;
+      }
+
+      this.csvData += "<tr>";
+      for (let colIndex = 0; colIndex <=4 ; colIndex++) {
+        this.csvData += "<td>";
+        this.csvData += dataarray[rowIndex][colIndex];
+        this.csvData += "</td>";
+      }
+      this.csvData += "</tr>";
+    }
+    this.csvData += "</table>";
   }
 }
 
