@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>SheetJS Example</title>
+  <!-- Laden Sie die SheetJS-Bibliothek -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
+</head>
+<body>
+  <h1>SheetJS Example</h1>
+  <!-- Erstellen Sie ein Formular zum Hochladen der Excel-Datei -->
+  <form>
+    <input type="file" id="input-file">
+    <button type="button" onclick="processFile()">Verarbeiten</button>
+  </form>
+  <!-- Erstellen Sie eine Tabelle, um die Ergebnisse anzuzeigen -->
+  <table id="output-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Alter</th>
+        <th>Email</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+  <!-- Schreiben Sie JavaScript-Code, um die Excel-Datei zu verarbeiten -->
+  <script>
+    function processFile() {
+      var file = document.getElementById("input-file").files[0];
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        var data = new Uint8Array(e.target.result);
+        var workbook = XLSX.read(data, {type: 'array'});
+        var sheet_name_list = workbook.SheetNames;
+        sheet_name_list.forEach(function(y) {
+          var worksheet = workbook.Sheets[y];
+          var headers = {};
+          var outputTable = document.getElementById("output-table").getElementsByTagName("tbody")[0];
+          for(z in worksheet) {
+            if(z[0] === '!') continue;
+            //parse out the column, row, and value
+            var col = z.substring(0,1);
+            var row = parseInt(z.substring(1));
+            var value = worksheet[z].v;
+
+            //store header names
+            if(row == 1) {
+              headers[col] = value;
+              continue;
+            }
+
+            if(!outputTable.rows[row-2]) outputTable.insertRow(row-2);
+            outputTable.rows[row-2].insertCell(col-1).textContent = value;
+          }
+        });
+      };
+      reader.readAsArrayBuffer(file);
+    }
+  </script>
+</body>
+</html>
