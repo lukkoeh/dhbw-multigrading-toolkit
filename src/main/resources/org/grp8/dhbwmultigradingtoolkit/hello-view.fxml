@@ -24,7 +24,7 @@
             <Font name="Arial Bold" size="32.0" />
          </font>
       </Label>
-      <ImageView fitHeight="35.0" fitWidth="35.0" layoutX="60.0" layoutY="350.0" pickOnBounds="true" preserveRatio="true" AnchorPane.topAnchor="350.0">
+      <ImageView fitHeight="35.0" fitWidth="35.0" layoutX="60.0" layoutY="350.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="60.0" AnchorPane.topAnchor="350.0">
       <image>
          <Image backgroundLoading="true" url="@images/icon-info.png" />
       </image>
@@ -67,5 +67,10 @@
             <Font name="Arial Bold" size="22.0" />
          </font>
       </Button>
+      <ImageView fitHeight="130.0" fitWidth="312.0" layoutX="60.0" layoutY="510.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="60.0">
+         <image>
+            <Image url="@images/pic-dhbw.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>
