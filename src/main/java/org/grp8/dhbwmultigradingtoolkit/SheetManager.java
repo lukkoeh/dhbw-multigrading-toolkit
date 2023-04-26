@@ -72,11 +72,99 @@ public class SheetManager {
             throw new RuntimeException(e);
         }
     }
-    public String parseXLSX(String path){
-        return "";
+    public void parseXLSX(String path){
+        try{
+            File f = new File(path);
+            FileInputStream fis = new FileInputStream(f);
+            XSSFWorkbook wb = new XSSFWorkbook(fis);
+            fis.close();
+            XSSFSheet sheet = wb.getSheetAt(0);
+            Iterator<Row> itr = sheet.iterator();
+            int i = 1;
+            itr.next();
+            while (itr.hasNext()) {
+                Row row = itr.next();
+                Iterator<Cell> c = row.cellIterator();
+                String[] metas = new String[2];
+                int z = 0;
+                while (c.hasNext()) {
+                    Cell cell = c.next();
+                    switch (cell.getCellType()) {
+                        case STRING -> metas[z] = cell.getStringCellValue();
+                        case NUMERIC -> {
+                            Double d = cell.getNumericCellValue();
+                            metas[z] = Integer.toString(d.intValue());
+                        }
+                    }
+                    z++;
+                }
+                this.meta.put(metas[0], metas[1]);
+                if (i == 8) { break; }
+                i++;
+            }
+            itr.next(); itr.next();
+            while (itr.hasNext()) {
+                Row row = itr.next();
+                ArrayList<String> dataarr = new ArrayList<String>();
+                Iterator<Cell> cellitr = row.cellIterator();
+                boolean isEmpty = true;
+                while (cellitr.hasNext()){
+                    Cell cell = cellitr.next();
+                    if(cell.getCellType() != CellType.BLANK ){
+                        isEmpty = false;
+                        break;
+                    }
+                }
+                cellitr = row.cellIterator();
+                if(!isEmpty){
+                    while (cellitr.hasNext()) {
+                        Cell cell = cellitr.next();
+                        switch (cell.getCellType()) {
+                            case STRING -> dataarr.add(cell.getStringCellValue());
+                            case NUMERIC -> {
+                                Double d = cell.getNumericCellValue();
+                                dataarr.add(Integer.toString(d.intValue()));
+                            }
+                        }
+                    }
+                    this.data.add(dataarr);
+                }
+
+            }
+            System.out.println(this.meta);
+            System.out.println(this.data);
+            System.out.println(this.data.size());
+            System.out.println(this.meta.size());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
-    public String parseODS(String path){
-        return "";
+    public void parseODS(String path) {
+        try {
+            File f = new File(path);
+            OdfSpreadsheetDocument ods = OdfSpreadsheetDocument.loadDocument(f);
+            OdfContentDom content = ods.getContentDom();
+            System.out.println(content.getFirstChild());
+            /*int rowcount = s.getSheet(0).getRowCount();
+            int colcount = s.getSheet(0).getColumnCount();
+            Sheet sheet = s.getSheet(0);
+            for (int i = 1; i<9; i++) {
+                String[] metas = new String[2];
+                for (int a = 0; a<2; a++) {
+                    metas[a] = sheet.getCellAt(a, i).toString();
+                }
+                this.meta.put(metas[0], metas[1]);
+            }
+            for (int i = 11; i< rowcount; i++) {
+                ArrayList<String> dataarr = new ArrayList<String>();
+                for (int a = 0; a < 6; a++) {
+                    dataarr.add(sheet.getCellAt(a, i).toString());
+                }
+                this.data.add(dataarr);
+            }*/
+        } catch(Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     public void mergeData(String path) {
