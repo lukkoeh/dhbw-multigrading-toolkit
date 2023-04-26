@@ -2,6 +2,13 @@ package org.grp8.dhbwmultigradingtoolkit;
 
 import javafx.scene.control.Alert;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.odftoolkit.odfdom.doc.OdfSpreadsheetDocument;
+import org.odftoolkit.odfdom.dom.OdfContentDom;;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -10,6 +17,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
 public class SheetManager {
 
@@ -18,16 +26,10 @@ public class SheetManager {
     public SheetManager(String path, String pathmatrikel) {
         try {
             String extension = FilenameUtils.getExtension(path);
-            switch (extension){
-                case "csv":
-                    parseCSV(path);
-                    break;
-                case "xlsx":
-                    parseXLSX(path);
-                    break;
-                case "ods":
-                    parseODS(path);
-                    break;
+            switch (extension) {
+                case "csv" -> parseCSV(path);
+                case "xlsx" -> parseXLSX(path);
+                case "ods" -> parseODS(path);
             }
             //mergeData(pathmatrikel);
 
@@ -38,13 +40,12 @@ public class SheetManager {
     public void parseCSV(String path){
         try {
             Path p = Paths.get(path);
-            File f = new File(path);
             System.out.println(path);
             BufferedReader s = Files.newBufferedReader(p, StandardCharsets.ISO_8859_1);
             int i = 0;
             String line = s.readLine();
             while (line!=null) {
-                if (i == 0) {System.out.println("skippy"); i++; continue;}
+                if (i == 0) {i++; continue;}
                 String[] dataarr = line.split(";");
                 this.meta.put(dataarr[0], dataarr[1]);
                 line = s.readLine();
