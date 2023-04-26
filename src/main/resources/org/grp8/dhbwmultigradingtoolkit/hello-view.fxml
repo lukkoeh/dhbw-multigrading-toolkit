@@ -14,7 +14,7 @@
          <Image backgroundLoading="true" url="@images/icon-instruction.png" />
       </image>
    </ImageView>
-      <Hyperlink contentDisplay="CENTER" layoutX="1130.0" layoutY="170.0" prefHeight="35.0" prefWidth="110.0" text="Anleitung" textFill="#666060" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="170.0">
+      <Hyperlink contentDisplay="CENTER" layoutX="1130.0" layoutY="170.0" prefHeight="35.0" text="Anleitung" textFill="#666060" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="170.0">
          <font>
             <Font name="Arial" size="22.0" />
          </font>
@@ -34,15 +34,38 @@
             <Image backgroundLoading="true" url="@images/icon-info.png" />
          </image>
       </ImageView>
-      <Label layoutY="245.0" text="Matrikeltabelle" textFill="#666060" AnchorPane.leftAnchor="120.0" AnchorPane.topAnchor="245.0">
+      <Label layoutY="245.0" prefHeight="35.0" text="Matrikeltabelle" textFill="#666060" AnchorPane.leftAnchor="120.0" AnchorPane.topAnchor="245.0">
          <font>
             <Font name="Arial Bold" size="22.0" />
          </font>
       </Label>
-      <Label layoutX="120.0" layoutY="255.0" text="Prüfungsergebnistabelle" textFill="#666060" AnchorPane.topAnchor="350.0">
+      <Label layoutX="120.0" layoutY="255.0" prefHeight="35.0" text="Prüfungsergebnistabelle" textFill="#666060" AnchorPane.topAnchor="350.0">
          <font>
             <Font name="Arial Bold" size="22.0" />
          </font>
       </Label>
+      <Button contentDisplay="CENTER" layoutX="446.0" layoutY="347.0" minWidth="200.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="250.0" text="Datei hochladen" textAlignment="CENTER" textFill="#606060" AnchorPane.leftAnchor="446.0" AnchorPane.topAnchor="347.0">
+         <font>
+            <Font name="Arial" size="22.0" />
+         </font>
+      </Button>
+      <Button contentDisplay="CENTER" layoutX="446.0" layoutY="242.0" minWidth="200.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="250.0" text="Datei hochladen" textAlignment="CENTER" textFill="#606060">
+         <font>
+            <Font name="Arial" size="22.0" />
+         </font>
+      </Button>
+      <ImageView fx:id="iconeye" fitHeight="35.0" fitWidth="35.0" layoutX="1040.0" layoutY="245.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/icon-eye.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="iconeye1" fitHeight="35.0" fitWidth="35.0" layoutX="1040.0" layoutY="350.0" pickOnBounds="true" preserveRatio="true">
+            <Image url="@images/icon-eye.png" />
+      </ImageView>
+      <Button layoutX="1023.0" layoutY="603.0" minHeight="35.0" minWidth="35.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="350.0" text="Hochladen auf Moodle " textFill="#d0d0d0" AnchorPane.bottomAnchor="60.0" AnchorPane.rightAnchor="50.0">
+         <font>
+            <Font name="Arial Bold" size="22.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
