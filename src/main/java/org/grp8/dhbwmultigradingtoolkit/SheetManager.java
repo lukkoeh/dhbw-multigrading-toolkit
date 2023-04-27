@@ -122,8 +122,8 @@ public class SheetManager {
                     switch (cell.getCellType()) {
                         case STRING -> metas[z] = cell.getStringCellValue();
                         case NUMERIC -> {
-                            Double d = cell.getNumericCellValue();
-                            metas[z] = Integer.toString(d.intValue());
+                            double d = cell.getNumericCellValue();
+                            metas[z] = Integer.toString((int) d);
                         }
                     }
                     z++;
@@ -155,8 +155,8 @@ public class SheetManager {
                         switch (cell.getCellType()) {
                             case STRING -> dataarr.add(cell.getStringCellValue());
                             case NUMERIC -> {
-                                Double d = cell.getNumericCellValue();
-                                dataarr.add(Integer.toString(d.intValue()));
+                                double d = cell.getNumericCellValue();
+                                dataarr.add(Integer.toString((int) d));
                             }
                         }
                     }
