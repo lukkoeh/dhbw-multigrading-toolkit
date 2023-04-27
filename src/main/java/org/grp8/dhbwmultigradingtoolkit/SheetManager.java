@@ -9,6 +9,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.odftoolkit.odfdom.doc.OdfSpreadsheetDocument;
 import org.odftoolkit.odfdom.dom.OdfContentDom;;
+import org.w3c.dom.*;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -22,7 +23,7 @@ import java.util.Iterator;
 /**
  * @author Timm Dörr and Lukas Köhler
  * SheetManager is a class which aims to provide an API to handle SheetData in a simple and unified way.
- * An instance of SheetManager has two arrays representing metadata of the operation as well as the data to use.
+ * An instance of SheetManager has two arrays representing metadata  of the operation as well as the data to use.
  * It is used by calling its constructor with the respective paths of the files that shall be parsed and detects their type automatically.
  * Supported file types: XLSX, ODS, CSV
  * Supported encoding on CSV: UTF-8
@@ -46,11 +47,16 @@ public class SheetManager {
             ex.printStackTrace();
         }
     }
-    public void parseCSV(String path){
+
+    /**
+     * @param path path to .csv file which has to be parsed.
+     *             parseODS is a function that takes a path of a .csv file and parses it into the SheetManager data structure. The file needs to be in the UTF-8.
+     * @author Timm Dörr and Lukas Köhler
+     */
+    public void parseCSV(String path) {
         try {
             Path p = Paths.get(path);
-            System.out.println(path);
-            BufferedReader s = Files.newBufferedReader(p, StandardCharsets.ISO_8859_1);
+            BufferedReader s = Files.newBufferedReader(p, StandardCharsets.UTF_8);
             int i = 0;
             String line = s.readLine();
             while (line != null) {
@@ -90,8 +96,14 @@ public class SheetManager {
             throw new RuntimeException(e);
         }
     }
-    public void parseXLSX(String path){
-        try{
+
+    /**
+     * @param path path to .ods file which has to be parsed.
+     *             parseXLSX is a function that takes a path of a .xlsx file and parses it into the SheetManager data structure.
+     * @author Timm Dörr and Lukas Köhler
+     */
+    public void parseXLSX(String path) {
+        try {
             File f = new File(path);
             FileInputStream fis = new FileInputStream(f);
             XSSFWorkbook wb = new XSSFWorkbook(fis);
@@ -167,25 +179,30 @@ public class SheetManager {
             File f = new File(path);
             OdfSpreadsheetDocument ods = OdfSpreadsheetDocument.loadDocument(f);
             OdfContentDom content = ods.getContentDom();
-            System.out.println(content.getFirstChild());
-            /*int rowcount = s.getSheet(0).getRowCount();
-            int colcount = s.getSheet(0).getColumnCount();
-            Sheet sheet = s.getSheet(0);
-            for (int i = 1; i<9; i++) {
-                String[] metas = new String[2];
-                for (int a = 0; a<2; a++) {
-                    metas[a] = sheet.getCellAt(a, i).toString();
-                }
-                this.meta.put(metas[0], metas[1]);
+            NodeList rowList = content.getElementsByTagName("table:table-row");
+            for (int i = 1; i < 8; i++) { //fill meta
+                NodeList cellList = rowList.item(i).getChildNodes();
+                this.meta.put(cellList.item(0).getFirstChild().getTextContent(), cellList.item(1).getFirstChild().getTextContent());
             }
-            for (int i = 11; i< rowcount; i++) {
+            for (int i = 11; i < rowList.getLength(); i++) {
+                NodeList cellList = rowList.item(i).getChildNodes();
                 ArrayList<String> dataarr = new ArrayList<String>();
-                for (int a = 0; a < 6; a++) {
-                    dataarr.add(sheet.getCellAt(a, i).toString());
+                boolean isEmpty = true;
+                for (int a = 0; a < cellList.getLength(); a++) {
+                    if (cellList.item(a).getFirstChild() == null) {
+                        break;
+                    }
+                    String tester = cellList.item(a).getFirstChild().getTextContent();
+                    if (tester != null) {
+                        isEmpty = false;
+                    }
+                    dataarr.add(tester);
                 }
-                this.data.add(dataarr);
-            }*/
-        } catch(Exception ex) {
+                if (!isEmpty) {
+                    this.data.add(dataarr);
+                }
+            }
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
