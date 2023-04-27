@@ -1,0 +1,41 @@
+
+.root {
+    -fx-font-family: 'System';
+    -fx-font-size: 22;
+    -fx-dark-red: #8E1016;
+    -fx-black: #211F1F;
+    -fx-dark-grey: #666060;
+    -fx-light-grey: #D9D9D9;
+
+}
+#header{
+  -fx-fill: -fx-dark-red;
+}
+
+.file-output{
+  -fx-text-fill: -fx-dark-grey;
+}
+#tool-name{
+  -fx-text-fill: -fx-light-grey;
+  -fx-text-transform: uppercase;
+  -fx-font-weight: bolder;
+  -fx-font-size: 32;
+}
+
+.table-name{
+  -fx-font-weight: bold;
+}
+
+#hochladen-button {
+  -fx-font-weight: bold;
+  -fx-text-fill: -fx-light-grey;
+  -fx-background-color: -fx-dark-red;
+  -fx-background-radius: 25px;
+}
+
+.file-upload-button{
+  -fx-background-radius: 25px;
+  -fx-background-color: -fx-light-grey;
+  -fx-text-fill: -fx-black;
+}
+
