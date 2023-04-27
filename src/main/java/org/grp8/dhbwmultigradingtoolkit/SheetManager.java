@@ -138,7 +138,7 @@ public class SheetManager {
             itr.next();
             while (itr.hasNext()) {
                 Row row = itr.next();
-                ArrayList<String> dataarr = new ArrayList<String>();
+                ArrayList<String> dataarr = new ArrayList<>();
                 Iterator<Cell> cellitr = row.cellIterator();
                 boolean isEmpty = true;
                 while (cellitr.hasNext()) {
@@ -186,7 +186,7 @@ public class SheetManager {
             }
             for (int i = 11; i < rowList.getLength(); i++) {
                 NodeList cellList = rowList.item(i).getChildNodes();
-                ArrayList<String> dataarr = new ArrayList<String>();
+                ArrayList<String> dataarr = new ArrayList<>();
                 boolean isEmpty = true;
                 for (int a = 0; a < cellList.getLength(); a++) {
                     if (cellList.item(a).getFirstChild() == null) {
@@ -204,17 +204,6 @@ public class SheetManager {
             }
         } catch (Exception ex) {
             ex.printStackTrace();
-        }
-    }
-
-    public void mergeData(String path) {
-        try {
-            File f = new File(path);
-
-        } catch (Exception ex) {
-            Alert a = new Alert(Alert.AlertType.ERROR);
-            a.setContentText("There was an error while merging the data.");
-            a.showAndWait();
         }
     }
 }
