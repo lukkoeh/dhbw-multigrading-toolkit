@@ -19,11 +19,20 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
+/**
+ * @author Timm Dörr and Lukas Köhler
+ * SheetManager is a class which aims to provide an API to handle SheetData in a simple and unified way.
+ * An instance of SheetManager has two arrays representing metadata of the operation as well as the data to use.
+ * It is used by calling its constructor with the respective paths of the files that shall be parsed and detects their type automatically.
+ * Supported file types: XLSX, ODS, CSV
+ * Supported encoding on CSV: UTF-8
+ */
 public class SheetManager {
 
-    private HashMap<String, String> meta = new HashMap<String, String>();
-    private ArrayList<ArrayList<String>> data = new ArrayList<ArrayList<String>>(); // example: Number (String) + all other columns as arraylist
-    public SheetManager(String path, String pathmatrikel) {
+    private final HashMap<String, String> meta = new HashMap<String, String>();
+    private final ArrayList<ArrayList<String>> data = new ArrayList<ArrayList<String>>(); // example: Number (String) + all other columns as arraylist
+
+    public SheetManager(String path) {
         try {
             String extension = FilenameUtils.getExtension(path);
             switch (extension) {
@@ -44,25 +53,34 @@ public class SheetManager {
             BufferedReader s = Files.newBufferedReader(p, StandardCharsets.ISO_8859_1);
             int i = 0;
             String line = s.readLine();
-            while (line!=null) {
-                if (i == 0) {i++; continue;}
+            while (line != null) {
+                if (i == 0) {
+                    i++;
+                    continue;
+                }
                 String[] dataarr = line.split(";");
                 this.meta.put(dataarr[0], dataarr[1]);
                 line = s.readLine();
-                if (i == 8) {s.readLine(); s.readLine(); line = s.readLine(); break;}
+                if (i == 8) {
+                    s.readLine();
+                    s.readLine();
+                    line = s.readLine();
+                    break;
+                }
                 i++;
             }
-            while (line!= null) {
+            while (line != null) {
                 String[] dataarr = line.split(";");
                 ArrayList<String> dataList = new ArrayList<String>();
-                for (i = 0; i<dataarr.length; i++) {
+                for (i = 0; i < dataarr.length; i++) {
                     dataList.add(dataarr[i]);
                 }
                 this.data.add(dataList);
                 line = s.readLine();
             }
+            s.close();
             Alert a = new Alert(Alert.AlertType.INFORMATION);
-            a.setContentText(this.meta.toString()+ this.data.toString());
+            a.setContentText(this.meta.toString() + this.data.toString());
             a.showAndWait();
         } catch (FileNotFoundException ex) {
             Alert a = new Alert(Alert.AlertType.ERROR);
@@ -99,24 +117,27 @@ public class SheetManager {
                     z++;
                 }
                 this.meta.put(metas[0], metas[1]);
-                if (i == 8) { break; }
+                if (i == 8) {
+                    break;
+                }
                 i++;
             }
-            itr.next(); itr.next();
+            itr.next();
+            itr.next();
             while (itr.hasNext()) {
                 Row row = itr.next();
                 ArrayList<String> dataarr = new ArrayList<String>();
                 Iterator<Cell> cellitr = row.cellIterator();
                 boolean isEmpty = true;
-                while (cellitr.hasNext()){
+                while (cellitr.hasNext()) {
                     Cell cell = cellitr.next();
-                    if(cell.getCellType() != CellType.BLANK ){
+                    if (cell.getCellType() != CellType.BLANK) {
                         isEmpty = false;
                         break;
                     }
                 }
                 cellitr = row.cellIterator();
-                if(!isEmpty){
+                if (!isEmpty) {
                     while (cellitr.hasNext()) {
                         Cell cell = cellitr.next();
                         switch (cell.getCellType()) {
@@ -131,14 +152,16 @@ public class SheetManager {
                 }
 
             }
-            System.out.println(this.meta);
-            System.out.println(this.data);
-            System.out.println(this.data.size());
-            System.out.println(this.meta.size());
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
+
+    /**
+     * @param path path to .ods file which has to be parsed.
+     *             parseODS is a function that takes a path of a .ods file and parses it into the SheetManager data structure.
+     * @author Timm Dörr and Lukas Köhler
+     */
     public void parseODS(String path) {
         try {
             File f = new File(path);
