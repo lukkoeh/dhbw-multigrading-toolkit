@@ -8,7 +8,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.odftoolkit.odfdom.doc.OdfSpreadsheetDocument;
-import org.odftoolkit.odfdom.dom.OdfContentDom;;
+import org.odftoolkit.odfdom.dom.OdfContentDom;
 import org.w3c.dom.*;
 
 import java.io.*;
@@ -30,8 +30,8 @@ import java.util.Iterator;
  */
 public class SheetManager {
 
-    private final HashMap<String, String> meta = new HashMap<String, String>();
-    private final ArrayList<ArrayList<String>> data = new ArrayList<ArrayList<String>>(); // example: Number (String) + all other columns as arraylist
+    private final HashMap<String, String> meta = new HashMap<>();
+    private final ArrayList<ArrayList<String>> data = new ArrayList<>(); // example: Number (String) + all other columns as arraylist
 
     public SheetManager(String path) {
         try {
@@ -77,7 +77,7 @@ public class SheetManager {
             }
             while (line != null) {
                 String[] dataarr = line.split(";");
-                ArrayList<String> dataList = new ArrayList<String>();
+                ArrayList<String> dataList = new ArrayList<>();
                 for (i = 0; i < dataarr.length; i++) {
                     dataList.add(dataarr[i]);
                 }
