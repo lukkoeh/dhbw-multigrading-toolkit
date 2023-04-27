@@ -23,7 +23,7 @@ import java.util.Iterator;
 /**
  * @author Timm Dörr and Lukas Köhler
  * SheetManager is a class which aims to provide an API to handle SheetData in a simple and unified way.
- * An instance of SheetManager has two arrays representing metadata  of the operation as well as the data to use.
+ * An instance of SheetManager has two arrays representing metadata (as HashMap) of the operation (as ArrayList) as well as the data to use.
  * It is used by calling its constructor with the respective paths of the files that shall be parsed and detects their type automatically.
  * Supported file types: XLSX, ODS, CSV
  * Supported encoding on CSV: UTF-8
