@@ -12,7 +12,7 @@
   -fx-fill: -fx-dark-red;
 }
 
-.file-output{
+#instruction{
   -fx-text-fill: -fx-dark-grey;
 }
 #tool-name{
@@ -21,6 +21,10 @@
   -fx-font-weight: bolder;
   -fx-font-size: 32;
 }
+.file-output {
+    -fx-font-style: italic;
+}
+
 
 .table-name{
   -fx-font-weight: bold;
