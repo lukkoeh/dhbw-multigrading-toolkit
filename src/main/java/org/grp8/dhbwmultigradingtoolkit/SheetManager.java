@@ -54,7 +54,7 @@ public class SheetManager {
      *             parseODS is a function that takes a path of a .csv file and parses it into the SheetManager data structure. The file needs to be in the UTF-8.
      * @author Timm Dörr and Lukas Köhler
      */
-    public void parseCSV(String path) {
+    private void parseCSV(String path) {
         try {
             Path p = Paths.get(path);
             BufferedReader s = Files.newBufferedReader(p, StandardCharsets.UTF_8);
@@ -175,7 +175,7 @@ public class SheetManager {
      *             parseODS is a function that takes a path of a .ods file and parses it into the SheetManager data structure.
      * @author Timm Dörr and Lukas Köhler
      */
-    public void parseODS(String path) {
+    private void parseODS(String path) {
         try {
             File f = new File(path);
             OdfSpreadsheetDocument ods = OdfSpreadsheetDocument.loadDocument(f);
