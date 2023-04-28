@@ -9,6 +9,6 @@ public class HelloController {
 
     @FXML
     protected void onHelloButtonClick() {
-        SheetManager s = new SheetManager("C:\\Users\\lkoehler\\IdeaProjects\\dhbw-multigrading-toolkit\\parse.csv");
+        SheetManager s = new SheetManager("C:\\Users\\lkoehler\\IdeaProjects\\dhbw-multigrading-toolkit\\parse.xlsx", "C:\\Users\\lkoehler\\IdeaProjects\\dhbw-multigrading-toolkit\\matrikel.xlsx");
     }
 }

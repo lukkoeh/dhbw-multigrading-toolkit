@@ -19,6 +19,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Objects;
 
 /**
  * @author Timm Dörr and Lukas Köhler
@@ -33,7 +34,7 @@ public class SheetManager {
     private final HashMap<String, String> meta = new HashMap<>();
     private final ArrayList<ArrayList<String>> data = new ArrayList<>(); // example: Number (String) + all other columns as arraylist
 
-    public SheetManager(String path) {
+    public SheetManager(String path, String pathmatrikel) {
         try {
             String extension = FilenameUtils.getExtension(path);
             switch (extension) {
@@ -41,7 +42,7 @@ public class SheetManager {
                 case "xlsx" -> parseXLSX(path);
                 case "ods" -> parseODS(path);
             }
-            //mergeData(pathmatrikel);
+            mergeData(pathmatrikel);
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -102,7 +103,7 @@ public class SheetManager {
      *             parseXLSX is a function that takes a path of a .xlsx file and parses it into the SheetManager data structure.
      * @author Timm Dörr and Lukas Köhler
      */
-    public void parseXLSX(String path) {
+    private void parseXLSX(String path) {
         try {
             File f = new File(path);
             FileInputStream fis = new FileInputStream(f);
@@ -205,5 +206,45 @@ public class SheetManager {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
+
+    /**
+     * The mergeData function joins the given table with the existing data on the SheetManager object, thus creating a complete
+     * Array.
+     * @param path path to the table to generate index
+     */
+    private void mergeData(String path) {
+        try{
+            MatriculationIndex index = new MatriculationIndex(path);
+            Iterator<ArrayList<String>> dataitr = this.data.iterator();
+            while (dataitr.hasNext()) {
+                ArrayList<String> tmp = dataitr.next();
+                if (tmp.size() == 4 && !Objects.equals(tmp.get(0), "")) {
+                    Student s = index.findStudentByNumber(tmp.get(0));
+                    tmp.add(1, s.getFirstname());
+                    tmp.add(2, s.getLastname());
+                }
+                else if (tmp.size() == 5 && !Objects.equals(tmp.get(0), "")) {
+                    tmp.remove(1);
+                    Student s = index.findStudentByNumber(tmp.get(0));
+                    tmp.add(1, s.getFirstname());
+                    tmp.add(2, s.getLastname());
+                }
+                else {
+                    Alert a = new Alert(Alert.AlertType.ERROR);
+                    a.setHeight(400);
+                    a.setContentText("Es ist ein Fehler beim Verarbeiten der Notentabelle aufgetreten. Bitte überprüfen Sie, ob die Tabelle dem erforderlichen Format entspricht.");
+                    a.showAndWait();
+                }
+            }
+            System.out.println(this.data);
+        } catch (Exception ex){
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setContentText("Es ist ein Fehler beim Verarbeiten der Matrikelnummern aufgetreten. Bitte überprüfen Sie die Matrikeltabelle.");
+            a.setHeight(400);
+            a.showAndWait();
+            ex.printStackTrace();
+        }
+
     }
 }
