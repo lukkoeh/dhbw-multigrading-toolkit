@@ -75,9 +75,7 @@ public class MatriculationIndex {
     }
 
     public Student findStudentByNumber(String number) {
-        Iterator<Student> stuitr = students.iterator();
-        while (stuitr.hasNext()) {
-            Student s = stuitr.next();
+        for (Student s : students) {
             if (Objects.equals(s.getNo(), number)) {
                 return s;
             }
