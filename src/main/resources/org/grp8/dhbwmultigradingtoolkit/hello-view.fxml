@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.grp8.dhbwmultigradingtoolkit.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.grp8.dhbwmultigradingtoolkit.Controller">
    <children>
       <Rectangle id="header" arcHeight="5.0" arcWidth="5.0" height="60.0" width="1280.0" AnchorPane.bottomAnchor="520.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
       <Label contentDisplay="CENTER" layoutX="1147.0" layoutY="170.0" prefHeight="35.0" text="Anleitung" AnchorPane.rightAnchor="54.33333333333326" AnchorPane.topAnchor="170.0">
@@ -36,6 +39,9 @@
                <Image url="@images/icon-instruction.png" />
             </ImageView>
          </graphic>
+         <tooltip>
+            <Tooltip styleClass="tooltip" text="Hier klicken zur Anleitung" />
+         </tooltip>
       </Button>
       <Button fx:id="previewMatrikel" layoutX="1114" layoutY="245.0" mnemonicParsing="false">
          <graphic>
@@ -43,6 +49,9 @@
                <Image url="@images/icon-eye.png" />
             </ImageView>
          </graphic>
+         <tooltip>
+            <Tooltip styleClass="tooltip" text="Hier geht's zur Vorschau der gewählten Tabelle" />
+         </tooltip>
       </Button>
       <Button fx:id="previewExam" layoutX="1114" layoutY="350.0" mnemonicParsing="false">
          <graphic>
@@ -50,6 +59,9 @@
                <Image url="@images/icon-eye.png" />
             </ImageView>
          </graphic>
+         <tooltip>
+            <Tooltip styleClass="tooltip" text="Hier geht's zur Vorschau der gewählten Tabelle"/>
+         </tooltip>
       </Button>
       <Button fx:id="infoMatrikel" layoutX="60" layoutY="245.0" mnemonicParsing="false">
          <graphic>
@@ -57,6 +69,9 @@
                <Image url="@images/icon-info.png" />
             </ImageView>
          </graphic>
+         <tooltip>
+            <Tooltip styleClass="tooltip" text="Tabelle mit Matrikelnummer und Namen" />
+         </tooltip>
       </Button>
       <Button fx:id="infoExam" layoutX="60" layoutY="350.0" mnemonicParsing="false">
          <graphic>
@@ -64,8 +79,9 @@
                <Image url="@images/icon-info.png" />
             </ImageView>
          </graphic>
+         <tooltip>
+            <Tooltip styleClass="tooltip" text="Tabelle mit Noten(punkten)" />
+         </tooltip>
       </Button>
-
-
         </children>
 </AnchorPane>
