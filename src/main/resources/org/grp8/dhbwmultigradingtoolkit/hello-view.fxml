@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Rectangle?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.grp8.dhbwmultigradingtoolkit.Controller">
    <children>
       <Rectangle id="header" arcHeight="5.0" arcWidth="5.0" height="60.0" width="1280.0" AnchorPane.bottomAnchor="520.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
       <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="1055.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="90.0">
@@ -15,8 +15,8 @@
          <Image backgroundLoading="true" url="@images/icon-instruction.png" />
       </image>
    </ImageView>
-      <Label id="instruction" contentDisplay="CENTER" layoutX="1136.0" layoutY="170.0" prefHeight="35.0" text="Anleitung" AnchorPane.rightAnchor="36.0" AnchorPane.topAnchor="170.0">
-      </Label>
+      <Button id="instruction" onAction="#openPdf" contentDisplay="CENTER" layoutX="1136.0" layoutY="170.0" prefHeight="35.0" text="Anleitung" AnchorPane.rightAnchor="36.0" AnchorPane.topAnchor="170.0">
+      </Button>
       <Label id="tool-name" layoutX="557.0" layoutY="6.0" text="Multigrading-Tool" textAlignment="CENTER" AnchorPane.topAnchor="6.0">
       </Label>
       <ImageView fitHeight="35.0" fitWidth="35.0" layoutX="60.0" layoutY="350.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="60.0" AnchorPane.topAnchor="350.0">
