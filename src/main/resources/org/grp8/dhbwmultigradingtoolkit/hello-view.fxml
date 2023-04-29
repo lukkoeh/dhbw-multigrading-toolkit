@@ -29,7 +29,6 @@
          <image>
             <Image url="@images/pic-dhbw.png" />
          </image>
-         
       </ImageView>
       <Label layoutX="793.0" layoutY="249.0" styleClass="file-output" text="Matrikeltabelle.xlsx" />
       <Label layoutX="793.0" layoutY="354.0" styleClass="file-output" text="Prüfungsergebnistabelle.xlsx" />
@@ -43,7 +42,7 @@
             <Tooltip styleClass="tooltip" text="Hier klicken zur Anleitung" />
          </tooltip>
       </Button>
-      <Button fx:id="previewMatrikel" layoutX="1114" layoutY="245.0" mnemonicParsing="false">
+      <Button fx:id="previewMatrikel"  styleClass="miniIcons" layoutX="1114" layoutY="245.0" mnemonicParsing="false">
          <graphic>
             <ImageView fitHeight="35" fitWidth="35" pickOnBounds="true" preserveRatio="true">
                <Image url="@images/icon-eye.png" />
@@ -53,7 +52,7 @@
             <Tooltip styleClass="tooltip" text="Hier geht's zur Vorschau der gewählten Tabelle" />
          </tooltip>
       </Button>
-      <Button fx:id="previewExam" layoutX="1114" layoutY="350.0" mnemonicParsing="false">
+      <Button fx:id="previewExam" styleClass="miniIcons" layoutX="1114" layoutY="350.0" mnemonicParsing="false">
          <graphic>
             <ImageView fitHeight="35" fitWidth="35" pickOnBounds="true" preserveRatio="true">
                <Image url="@images/icon-eye.png" />
@@ -63,7 +62,7 @@
             <Tooltip styleClass="tooltip" text="Hier geht's zur Vorschau der gewählten Tabelle"/>
          </tooltip>
       </Button>
-      <Button fx:id="infoMatrikel" layoutX="60" layoutY="245.0" mnemonicParsing="false">
+      <Button fx:id="infoMatrikel" styleClass="miniIcons" layoutX="60" layoutY="245.0" mnemonicParsing="false">
          <graphic>
             <ImageView fitHeight="35" fitWidth="35" pickOnBounds="true" preserveRatio="true">
                <Image url="@images/icon-info.png" />
@@ -73,7 +72,7 @@
             <Tooltip styleClass="tooltip" text="Tabelle mit Matrikelnummer und Namen" />
          </tooltip>
       </Button>
-      <Button fx:id="infoExam" layoutX="60" layoutY="350.0" mnemonicParsing="false">
+      <Button fx:id="infoExam" styleClass="miniIcons" layoutX="60" layoutY="350.0" mnemonicParsing="false">
          <graphic>
             <ImageView fitHeight="35" fitWidth="35" pickOnBounds="true" preserveRatio="true">
                <Image url="@images/icon-info.png" />

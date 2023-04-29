@@ -3,6 +3,7 @@
     -fx-font-family: 'System';
     -fx-font-size: 22;
     -fx-dark-red: #8E1016;
+    -fx-darker-red: #4D070A;
     -fx-black: #211F1F;
     -fx-dark-grey: #666060;
     -fx-light-grey: #D9D9D9;
@@ -25,8 +26,6 @@
 .file-output {
     -fx-font-style: italic;
 }
-
-
 .table-name{
   -fx-font-weight: bold;
 }
@@ -36,6 +35,14 @@
   -fx-text-fill: -fx-light-grey;
   -fx-background-color: -fx-dark-red;
   -fx-background-radius: 25px;
+}
+
+.button:hover {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 10, 0.5, 0, 0);
+}
+
+#hochladen-button:pressed {
+    -fx-background-color: -fx-darker-red;
 }
 
 .file-upload-button{
@@ -54,5 +61,11 @@
     -fx-background-color: -fx-light-grey;
     -fx-text-fill: -fx-dark-grey;
     -fx-font-size: 16px;
+}
+
+.miniIcons {
+    -fx-background-radius: 25px;
+    -fx-background-color: transparent;
+    -fx-text-fill: -fx-black;
 }
 
