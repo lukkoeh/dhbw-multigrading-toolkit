@@ -41,8 +41,9 @@ public class Controller {
 
 
     //linking eye-button to previews
-    private Stage previewMatrikelStage;
 
+    //1. Preview of Matrikeltabelle
+    private Stage previewMatrikelStage;
     @FXML
     private void showPreviewMatrikel(ActionEvent event) throws IOException {
         if (previewMatrikelStage == null) {
@@ -57,6 +58,21 @@ public class Controller {
         previewMatrikelStage.showAndWait();
     }
 
+    //2. Preview of Notentabelle
+    private Stage previewExamStage;
+    @FXML
+    private void showPreviewExam(ActionEvent event) throws IOException {
+        if (previewExamStage == null) {
+            // Load preview-notentabelle.fxml and create a new stage
+            Parent root = FXMLLoader.load(getClass().getResource("preview-notentabelle.fxml"));
+            previewExamStage = new Stage();
+            previewExamStage.initModality(Modality.APPLICATION_MODAL);
+            previewExamStage.setScene(new Scene(root));
+        }
+
+        // Show the preview window
+        previewExamStage.showAndWait();
+    }
 
 
 
