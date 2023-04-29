@@ -1,5 +1,6 @@
 package org.grp8.dhbwmultigradingtoolkit;
 
+import com.sun.javafx.geom.Edge;
 import javafx.scene.control.Alert;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.poi.ss.usermodel.Cell;
@@ -9,6 +10,10 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.odftoolkit.odfdom.doc.OdfSpreadsheetDocument;
 import org.odftoolkit.odfdom.dom.OdfContentDom;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.w3c.dom.*;
 
 import java.io.*;
@@ -246,5 +251,13 @@ public class SheetManager {
             ex.printStackTrace();
         }
 
+    }
+
+    public HashMap<String, String> getMeta() {
+        return meta;
+    }
+
+    public ArrayList<ArrayList<String>> getData() {
+        return data;
     }
 }
