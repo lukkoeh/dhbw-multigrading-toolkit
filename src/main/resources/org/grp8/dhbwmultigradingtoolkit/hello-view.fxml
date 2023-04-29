@@ -50,7 +50,7 @@
             <Tooltip styleClass="tooltip" text="Hier geht's zur Vorschau der gewählten Tabelle" />
          </tooltip>
       </Button>
-      <Button fx:id="previewExam" styleClass="miniIcons" layoutX="1114" layoutY="350.0" mnemonicParsing="false">
+      <Button fx:id="previewExam" styleClass="miniIcons" onAction="#showPreviewExam" layoutX="1114" layoutY="350.0" mnemonicParsing="false">
          <graphic>
             <ImageView fitHeight="35" fitWidth="35" pickOnBounds="true" preserveRatio="true">
                <Image url="@images/icon-eye.png" />
