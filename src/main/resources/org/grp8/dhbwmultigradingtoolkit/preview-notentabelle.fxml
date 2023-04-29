@@ -6,11 +6,11 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="550.0" prefWidth="924.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.grp8.dhbwmultigradingtoolkit.PreviewNotentabelle">
+<AnchorPane prefHeight="550.0" prefWidth="924.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.grp8.dhbwmultigradingtoolkit.Controller">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8e1016" height="40.0" stroke="BLACK" strokeType="INSIDE" width="924.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
       <ScrollBar layoutX="903.0" layoutY="40.0" orientation="VERTICAL" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0" />
-      <Label layoutX="330.0" layoutY="180.0" text="Vorschau der Matrikeltabelle" textFill="#d9d9d9" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="7.0">
+      <Label layoutX="330.0" layoutY="180.0" text="Vorschau der Notentabelle" textFill="#d9d9d9" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="7.0">
          <font>
             <Font name="Arial Bold" size="22.0" />
          </font></Label>
