@@ -6,7 +6,7 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="550.0" prefWidth="924.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.grp8.dhbwmultigradingtoolkit.PreviewMatrikeltabelle">
+<AnchorPane prefHeight="550.0" prefWidth="924.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.grp8.dhbwmultigradingtoolkit.Controller">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8e1016" height="40.0" layoutY="4.0" stroke="BLACK" strokeType="INSIDE" width="924.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
       <ScrollBar layoutX="654.0" layoutY="122.0" orientation="VERTICAL" prefHeight="510.0" prefWidth="15.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0" />
