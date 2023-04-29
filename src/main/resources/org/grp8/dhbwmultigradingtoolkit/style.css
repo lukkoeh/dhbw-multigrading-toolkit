@@ -44,3 +44,15 @@
   -fx-text-fill: -fx-black;
 }
 
+.tooltip {
+    -fx-display: inline-block;
+    -fx-position: relative;
+    -fx-border-style: dotted;
+    -fx-border-color: #8E1016;
+    -fx-border-width: 0 0 1px 0;
+    -fx-text-alignment: left;
+    -fx-background-color: -fx-light-grey;
+    -fx-text-fill: -fx-dark-grey;
+    -fx-font-size: 16px;
+}
+
