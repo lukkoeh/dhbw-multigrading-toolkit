@@ -14,6 +14,7 @@
 
 #instruction{
   -fx-text-fill: -fx-dark-grey;
+  -fx-font-size: 14;
 }
 #tool-name{
   -fx-text-fill: -fx-light-grey;
