@@ -3,18 +3,45 @@
     -fx-font-family: 'System';
     -fx-font-size: 22;
     -fx-dark-red: #8E1016;
+    -fx-darker-red: #4D070A;
     -fx-black: #211F1F;
     -fx-dark-grey: #666060;
     -fx-light-grey: #D9D9D9;
 
 }
+.tooltip {
+    -fx-display: inline-block;
+    -fx-position: relative;
+    -fx-border-style: dotted;
+    -fx-border-color: #8E1016;
+    -fx-border-width: 0 0 1px 0;
+    -fx-text-alignment: left;
+    -fx-background-color: -fx-light-grey;
+    -fx-text-fill: -fx-dark-grey;
+    -fx-font-size: 16px;
+}
+
+.miniIcons {
+    -fx-background-radius: 25px;
+    -fx-background-color: transparent;
+    -fx-text-fill: -fx-black;
+}
+.button:hover {
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.4), 10, 0.5, 0, 0);
+}
+
 #header{
   -fx-fill: -fx-dark-red;
 }
 
 #instruction{
   -fx-text-fill: -fx-dark-grey;
+    -fx-background-color: transparent;
   -fx-font-size: 14;
+}
+
+#instruction:hover{
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 10, 0.5, 0, 0);
 }
 #tool-name{
   -fx-text-fill: -fx-light-grey;
@@ -25,10 +52,13 @@
 .file-output {
     -fx-font-style: italic;
 }
-
-
 .table-name{
   -fx-font-weight: bold;
+}
+.file-upload-button{
+    -fx-background-radius: 25px;
+    -fx-background-color: -fx-light-grey;
+    -fx-text-fill: -fx-black;
 }
 
 #hochladen-button {
@@ -38,9 +68,6 @@
   -fx-background-radius: 25px;
 }
 
-.file-upload-button{
-  -fx-background-radius: 25px;
-  -fx-background-color: -fx-light-grey;
-  -fx-text-fill: -fx-black;
+#hochladen-button:pressed {
+    -fx-background-color: -fx-darker-red;
 }
-

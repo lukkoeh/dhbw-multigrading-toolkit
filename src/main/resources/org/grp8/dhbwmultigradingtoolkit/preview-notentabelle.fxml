@@ -10,14 +10,16 @@
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8e1016" height="40.0" stroke="BLACK" strokeType="INSIDE" width="924.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
       <ScrollBar layoutX="903.0" layoutY="40.0" orientation="VERTICAL" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0" />
-      <ImageView fitHeight="33.0" fitWidth="40.0" layoutX="887.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image backgroundLoading="true" url="@images/icon-x.png" />
-         </image>
-      </ImageView>
       <Label layoutX="330.0" layoutY="180.0" text="Vorschau der Matrikeltabelle" textFill="#d9d9d9" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="7.0">
          <font>
             <Font name="Arial Bold" size="22.0" />
          </font></Label>
+      <Button fx:id="exit" layoutX="882.0" mnemonicParsing="false" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <graphic>
+            <ImageView fitHeight="31.0" fitWidth="31.0" layoutX="882.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
+               <Image url="@images/icon-x.png" />
+            </ImageView>
+         </graphic>
+      </Button>
    </children>
 </AnchorPane>
