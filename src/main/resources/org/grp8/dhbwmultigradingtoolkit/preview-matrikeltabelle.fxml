@@ -15,12 +15,5 @@
             <Font name="Arial Bold" size="22.0" />
          </font>
       </Label>
-      <Button fx:id="exit" layoutX="882.0" mnemonicParsing="false" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <graphic>
-            <ImageView fitHeight="31.0" fitWidth="31.0" layoutX="882.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
-               <Image url="@images/icon-x.png" />
-            </ImageView>
-         </graphic>
-      </Button>
    </children>
 </AnchorPane>
