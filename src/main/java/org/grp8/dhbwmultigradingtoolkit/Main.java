@@ -20,5 +20,5 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         launch(args);
-    }
+    }//all function in same folder run
 }
