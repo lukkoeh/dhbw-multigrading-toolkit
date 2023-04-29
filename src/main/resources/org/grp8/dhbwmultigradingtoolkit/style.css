@@ -9,48 +9,6 @@
     -fx-light-grey: #D9D9D9;
 
 }
-#header{
-  -fx-fill: -fx-dark-red;
-}
-
-#instruction{
-  -fx-text-fill: -fx-dark-grey;
-  -fx-font-size: 14;
-}
-#tool-name{
-  -fx-text-fill: -fx-light-grey;
-  -fx-text-transform: uppercase;
-  -fx-font-weight: bolder;
-  -fx-font-size: 32;
-}
-.file-output {
-    -fx-font-style: italic;
-}
-.table-name{
-  -fx-font-weight: bold;
-}
-
-#hochladen-button {
-  -fx-font-weight: bold;
-  -fx-text-fill: -fx-light-grey;
-  -fx-background-color: -fx-dark-red;
-  -fx-background-radius: 25px;
-}
-
-.button:hover {
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 10, 0.5, 0, 0);
-}
-
-#hochladen-button:pressed {
-    -fx-background-color: -fx-darker-red;
-}
-
-.file-upload-button{
-  -fx-background-radius: 25px;
-  -fx-background-color: -fx-light-grey;
-  -fx-text-fill: -fx-black;
-}
-
 .tooltip {
     -fx-display: inline-block;
     -fx-position: relative;
@@ -68,4 +26,48 @@
     -fx-background-color: transparent;
     -fx-text-fill: -fx-black;
 }
+.button:hover {
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.4), 10, 0.5, 0, 0);
+}
 
+#header{
+  -fx-fill: -fx-dark-red;
+}
+
+#instruction{
+  -fx-text-fill: -fx-dark-grey;
+    -fx-background-color: transparent;
+  -fx-font-size: 14;
+}
+
+#instruction:hover{
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 10, 0.5, 0, 0);
+}
+#tool-name{
+  -fx-text-fill: -fx-light-grey;
+  -fx-text-transform: uppercase;
+  -fx-font-weight: bolder;
+  -fx-font-size: 32;
+}
+.file-output {
+    -fx-font-style: italic;
+}
+.table-name{
+  -fx-font-weight: bold;
+}
+.file-upload-button{
+    -fx-background-radius: 25px;
+    -fx-background-color: -fx-light-grey;
+    -fx-text-fill: -fx-black;
+}
+
+#hochladen-button {
+  -fx-font-weight: bold;
+  -fx-text-fill: -fx-light-grey;
+  -fx-background-color: -fx-dark-red;
+  -fx-background-radius: 25px;
+}
+
+#hochladen-button:pressed {
+    -fx-background-color: -fx-darker-red;
+}

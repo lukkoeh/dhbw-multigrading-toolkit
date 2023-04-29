@@ -32,7 +32,7 @@
       </ImageView>
       <Label layoutX="793.0" layoutY="249.0" styleClass="file-output" text="Matrikeltabelle.xlsx" />
       <Label layoutX="793.0" layoutY="354.0" styleClass="file-output" text="Prüfungsergebnistabelle.xlsx" />
-      <Button fx:id="instruction" layoutX="1132.0" layoutY="75.0" mnemonicParsing="false" onAction="#openPdf">
+      <Button fx:id="instruction"  layoutX="1132.0" layoutY="75.0" mnemonicParsing="false" onAction="#openPdf">
          <graphic>
             <ImageView fitHeight="80" fitWidth="80" pickOnBounds="true" preserveRatio="true">
                <Image url="@images/icon-instruction.png" />
