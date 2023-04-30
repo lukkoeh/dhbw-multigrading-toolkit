@@ -21,12 +21,6 @@ public class Controller {
     private Button previewMatrikel;
     @FXML
     private Button previewExam;
-    @FXML
-    private Button exit;
-    @FXML
-    private Button infoMatrikel;
-    @FXML
-    private Button infoExam;
 
 
 
@@ -73,8 +67,4 @@ public class Controller {
         // Show the preview window
         previewExamStage.showAndWait();
     }
-
-
-
-    //linking x-buttons on Previews to Home-Page
 }

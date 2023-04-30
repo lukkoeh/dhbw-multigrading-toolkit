@@ -61,13 +61,13 @@
     -fx-text-fill: -fx-black;
 }
 
-#hochladen-button {
+#moodle-upload-button {
   -fx-font-weight: bold;
   -fx-text-fill: -fx-light-grey;
   -fx-background-color: -fx-dark-red;
   -fx-background-radius: 25px;
 }
 
-#hochladen-button:pressed {
+#moodle-upload-button:pressed {
     -fx-background-color: -fx-darker-red;
 }
