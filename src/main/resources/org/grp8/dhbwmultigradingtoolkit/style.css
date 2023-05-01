@@ -117,3 +117,14 @@
     -fx-background-color: -fx-darker-red;
 }
 
+.rounded-rectangle {
+    -fx-fill: transparent;
+    -fx-stroke: gray;
+    -fx-stroke-width: 2px;
+    -fx-arc-width: 20px;
+    -fx-arc-height: 20px;
+}
+.text-area-no-scrollbars {
+    -fx-hbar-policy: null;
+    -fx-vbar-policy: null;
+}
