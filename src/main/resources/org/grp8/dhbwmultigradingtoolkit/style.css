@@ -47,13 +47,15 @@
   -fx-text-fill: -fx-light-grey;
   -fx-text-transform: uppercase;
   -fx-font-weight: bolder;
-  -fx-font-size: 32;
+  -fx-font-size: 30;
 }
+
 .login-toolname{
     -fx-text-fill: -fx-light-grey;
     -fx-text-transform: uppercase;
     -fx-font-weight: bolder;
-    -fx-font-size: 25;
+    -fx-font-size: 20;
+    -fx-alignment: center;
 }
 
 
@@ -64,7 +66,21 @@
 }
 .table-name{
   -fx-font-weight: bold;
+
+
 }
+
+.tableNameForLogin{
+    -fx-font-family: -fx-font-family;
+    -fx-font-weight: bolder;
+    -fx-text-fill:  -fx-dark-grey;
+    -fx-font-size: 25;
+
+
+
+
+}
+
 .file-upload-button{
     -fx-background-radius: 25px;
     -fx-background-color: -fx-light-grey;

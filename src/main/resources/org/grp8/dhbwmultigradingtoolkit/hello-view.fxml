@@ -30,7 +30,7 @@
       </Button>
 
       <!--moodle upload button-->
-      <Button id="moodle-upload-button" layoutX="904.0" layoutY="610.0" minHeight="35.0" minWidth="35.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="325.0" text="Hochladen auf Moodle" AnchorPane.bottomAnchor="60.0" AnchorPane.rightAnchor="50.66666666666674">
+      <Button id="hochladen-button" layoutX="904.0" layoutY="610.0" minHeight="35.0" minWidth="35.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="325.0" text="Hochladen auf Moodle" AnchorPane.bottomAnchor="60.0" AnchorPane.rightAnchor="50.66666666666674">
       </Button>
 
       <!--DHBW Logo-->
