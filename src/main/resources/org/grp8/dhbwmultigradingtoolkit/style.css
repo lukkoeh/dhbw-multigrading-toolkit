@@ -71,13 +71,10 @@
 }
 
 .tableNameForLogin{
-    -fx-font-family: -fx-font-family;
     -fx-font-weight: bolder;
     -fx-text-fill:  -fx-dark-grey;
-    -fx-font-size: 25;
-
-
-
+    -fx-font-family: "System Bold";
+    -fx-font-size:18px;
 
 }
 
@@ -85,6 +82,15 @@
     -fx-background-radius: 25px;
     -fx-background-color: -fx-light-grey;
     -fx-text-fill: -fx-black;
+}
+
+.abbrechen-button{
+
+    fx-font-weight: bold;
+    -fx-font-size:18px;
+    -fx-text-fill: -fx-black;
+    -fx-background-color: -fx-light-grey;
+    -fx-background-radius: 25px;
 }
 
 #hochladen-button {
@@ -95,5 +101,18 @@
 }
 
 #hochladen-button:pressed {
+    -fx-background-color: -fx-darker-red;
+}
+
+
+#anmelden-button {
+    -fx-font-weight: bold;
+    -fx-text-fill: -fx-light-grey;
+    -fx-background-color: -fx-dark-red;
+    -fx-background-radius: 25px;
+    -fx-font-size:18px;
+}
+
+#anmelden-button:pressed {
     -fx-background-color: -fx-darker-red;
 }
