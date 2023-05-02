@@ -12,6 +12,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
 
 public class Controller {
     //Declaration of Button
@@ -21,7 +22,10 @@ public class Controller {
     private Button previewMatrikel;
     @FXML
     private Button previewExam;
-
+    @FXML
+    private Button moodleUploadButton;
+    @FXML
+    private Button fileUploadGrade;
 
 
 
@@ -66,5 +70,15 @@ public class Controller {
 
         // Show the preview window
         previewExamStage.showAndWait();
+    }
+
+    //disable Moodle-Upload-Button
+    public final void disableButton(){
+        if (fileUploadGrade.getOnMousePressed()){
+            moodleUploadButton.setDisable(true);
+        }
+        else {
+            moodleUploadButton.setDisable(false);
+        }
     }
 }
