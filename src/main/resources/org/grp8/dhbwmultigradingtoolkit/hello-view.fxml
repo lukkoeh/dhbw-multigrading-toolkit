@@ -24,13 +24,13 @@
       </Label>
 
       <!--file upload button-->
-      <Button contentDisplay="CENTER" layoutX="446.0" layoutY="335.0" minWidth="200.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="250.0" styleClass="file-upload-button" text="Datei hochladen" textAlignment="CENTER" AnchorPane.leftAnchor="446.0" AnchorPane.topAnchor="335.0">
+      <Button id="fileUploadMatrikel" contentDisplay="CENTER" layoutX="446.0" layoutY="335.0" minWidth="200.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="250.0" styleClass="file-upload-button" text="Datei hochladen" textAlignment="CENTER" AnchorPane.leftAnchor="446.0" AnchorPane.topAnchor="335.0">
       </Button>
-      <Button contentDisplay="CENTER" layoutX="446.0" layoutY="239.0" minWidth="200.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="250.0" styleClass="file-upload-button" text="Datei hochladen" textAlignment="CENTER">
+      <Button id="fileUploadGrade" contentDisplay="CENTER" layoutX="446.0" layoutY="239.0" minWidth="200.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="250.0" styleClass="file-upload-button" text="Datei hochladen" textAlignment="CENTER">
       </Button>
 
       <!--moodle upload button-->
-      <Button id="moodle-upload-button" layoutX="904.0" layoutY="610.0" minHeight="35.0" minWidth="35.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="325.0" text="Hochladen auf Moodle" AnchorPane.bottomAnchor="60.0" AnchorPane.rightAnchor="50.66666666666674">
+      <Button id="moodleUploadButton" disable="true" layoutX="904.0" layoutY="610.0" minHeight="35.0" minWidth="35.0" mnemonicParsing="false" opacity="0.5" prefHeight="50.0" prefWidth="325.0" text="Hochladen auf Moodle" AnchorPane.bottomAnchor="60.0" AnchorPane.rightAnchor="50.66666666666674">
       </Button>
 
       <!--DHBW Logo-->
