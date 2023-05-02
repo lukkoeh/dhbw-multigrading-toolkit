@@ -72,13 +72,13 @@
     -fx-text-fill: -fx-black;
 }
 
-#moodle-upload-button {
+#moodleUploadButton {
   -fx-font-weight: bold;
   -fx-text-fill: -fx-light-grey;
   -fx-background-color: -fx-dark-red;
   -fx-background-radius: 25px;
 }
 
-#moodle-upload-button:pressed {
+#moodleUploadButton:pressed {
     -fx-background-color: -fx-darker-red;
 }
