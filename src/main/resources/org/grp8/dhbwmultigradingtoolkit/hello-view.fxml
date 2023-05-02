@@ -14,7 +14,7 @@
       <Rectangle id="header" arcHeight="5.0" arcWidth="5.0" height="60.0" width="1280.0" AnchorPane.bottomAnchor="520.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
 
       <!--heading-->
-      <Label styleClass="tool-name" layoutX="557.0" layoutY="6.0" text="Multigrading-Tool" textAlignment="CENTER" AnchorPane.topAnchor="6.0">
+      <Label layoutX="557.0" layoutY="6.0" styleClass="tool-name" text="Multigrading-Tool" textAlignment="CENTER" AnchorPane.topAnchor="6.0">
       </Label>
 
       <!--name of tables-->
@@ -45,7 +45,7 @@
       <Label layoutX="793.0" layoutY="354.0" styleClass="file-output" text="Prüfungsergebnistabelle.xlsx" />
 
       <!--button to call out usage instruction of tool-->
-      <Button fx:id="instruction"  layoutX="1132.0" layoutY="75.0" mnemonicParsing="false" onAction="#openPdf">
+      <Button fx:id="instruction" layoutX="1132.0" layoutY="75.0" mnemonicParsing="false" onAction="#openPdf">
          <graphic>
             <ImageView fitHeight="80" fitWidth="80" pickOnBounds="true" preserveRatio="true">
                <Image url="@images/icon-instruction.png" />
@@ -57,7 +57,7 @@
       </Button>
 
       <!--button to call out preview of Matrikeltabelle-->
-      <Button fx:id="previewMatrikel" styleClass="miniIcons" onAction="#showPreviewMatrikel" layoutX="1114" layoutY="245.0" mnemonicParsing="false">
+      <Button fx:id="previewMatrikel" layoutX="1114" layoutY="245.0" mnemonicParsing="false" onAction="#showPreviewMatrikel" styleClass="miniIcons">
          <graphic>
             <ImageView fitHeight="35" fitWidth="35" pickOnBounds="true" preserveRatio="true">
                <Image url="@images/icon-eye.png" />
@@ -69,7 +69,7 @@
       </Button>
 
       <!--button to call out preview of Notentabelle-->
-      <Button fx:id="previewExam" styleClass="miniIcons" onAction="#showPreviewExam" layoutX="1114" layoutY="350.0" mnemonicParsing="false">
+      <Button fx:id="previewExam" layoutX="1114" layoutY="350.0" mnemonicParsing="false" onAction="#showPreviewExam" styleClass="miniIcons">
          <graphic>
             <ImageView fitHeight="35" fitWidth="35" pickOnBounds="true" preserveRatio="true">
                <Image url="@images/icon-eye.png" />
@@ -81,7 +81,7 @@
       </Button>
 
       <!--info-icons to show the tool tips-->
-      <Button fx:id="infoMatrikel" styleClass="miniIcons" layoutX="60" layoutY="245.0" mnemonicParsing="false">
+      <Button fx:id="infoMatrikel" layoutX="60" layoutY="245.0" mnemonicParsing="false" styleClass="miniIcons">
          <graphic>
             <ImageView fitHeight="35" fitWidth="35" pickOnBounds="true" preserveRatio="true">
                <Image url="@images/icon-info.png" />
@@ -101,8 +101,5 @@
             <Tooltip styleClass="tooltip" text="Tabelle mit Noten(punkten)" />
          </tooltip>
       </Button>
-      <ImageView fitHeight="35" fitWidth="35" layoutX="74.0" layoutY="247.0" pickOnBounds="true" preserveRatio="true">
-         <Image url="@images/icon-info.png" />
-      </ImageView>
         </children>
 </AnchorPane>
