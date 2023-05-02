@@ -44,12 +44,22 @@
 #instruction:hover{
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 10, 0.5, 0, 0);
 }
-#tool-name{
+.tool-name{
   -fx-text-fill: -fx-light-grey;
   -fx-text-transform: uppercase;
   -fx-font-weight: bolder;
   -fx-font-size: 32;
 }
+.login-toolname{
+    -fx-text-fill: -fx-light-grey;
+    -fx-text-transform: uppercase;
+    -fx-font-weight: bolder;
+    -fx-font-size: 25;
+}
+
+
+
+
 .file-output {
     -fx-font-style: italic;
 }
@@ -62,13 +72,13 @@
     -fx-text-fill: -fx-black;
 }
 
-#hochladen-button {
+#moodle-upload-button {
   -fx-font-weight: bold;
   -fx-text-fill: -fx-light-grey;
   -fx-background-color: -fx-dark-red;
   -fx-background-radius: 25px;
 }
 
-#hochladen-button:pressed {
+#moodle-upload-button:pressed {
     -fx-background-color: -fx-darker-red;
 }
