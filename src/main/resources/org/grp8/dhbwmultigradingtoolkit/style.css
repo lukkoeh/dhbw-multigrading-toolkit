@@ -87,7 +87,7 @@
 
 .abbrechen-button{
 
-    fx-font-weight: bold;
+    -fx-font-weight: bold;
     -fx-font-size:18px;
     -fx-text-fill: -fx-black;
     -fx-background-color: -fx-light-grey;
@@ -128,4 +128,10 @@
 .text-area-no-scrollbars {
     -fx-hbar-policy: null;
     -fx-vbar-policy: null;
+}
+
+.passwort-input {
+    -fx-background-color: transparent;
+    -fx-background-texture: "****";
+    -fx-text-fill: black;
 }
