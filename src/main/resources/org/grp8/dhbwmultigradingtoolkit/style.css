@@ -19,6 +19,7 @@
     -fx-background-color: -fx-light-grey;
     -fx-text-fill: -fx-dark-grey;
     -fx-font-size: 16px;
+    -fx-background-radius: 25px;
 }
 
 .miniIcons {
@@ -100,7 +101,7 @@
   -fx-background-radius: 25px;
 }
 
-#hochladen-button:pressed {
+#moodle-upload-button:pressed {
     -fx-background-color: -fx-darker-red;
 }
 
