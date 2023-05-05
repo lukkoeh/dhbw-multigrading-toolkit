@@ -12,7 +12,7 @@ public class HelloController {
         String[] creds = new String[2];
         {
             creds[0] = "tim.doerr.22@lehre.mosbach.dhbw.de";
-            creds[1] = "Neoeffects!22";
+            creds[1] = "denkste";
         }
         Bot b = new Bot(creds, s);
         b.start();
