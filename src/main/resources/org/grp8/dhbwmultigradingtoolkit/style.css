@@ -57,16 +57,18 @@
     -fx-font-size: 25;
 }
 
-
-
-
 .file-output {
     -fx-font-style: italic;
 }
+
+.file-output.error {
+    -fx-text-fill: -fx-dark-red;
+}
+
 .table-name{
   -fx-font-weight: bold;
 }
-.file-upload-button{
+.fileUploadButton{
     -fx-background-radius: 25px;
     -fx-background-color: -fx-light-grey;
     -fx-text-fill: -fx-black;
