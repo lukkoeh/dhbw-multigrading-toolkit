@@ -9,7 +9,7 @@
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
    <TextField fx:id="txt_user" />
-   <TextField fx:id="txt_password" />
+   <PasswordField fx:id="txt_password" />
 
     <Label fx:id="welcomeText" />
     <Button onAction="#onHelloButtonClick" text="Hello!" />
