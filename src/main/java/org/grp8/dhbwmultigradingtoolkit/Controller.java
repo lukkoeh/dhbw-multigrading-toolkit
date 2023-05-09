@@ -91,7 +91,7 @@ public class Controller {
      */
     @FXML
     public void handleFileUploadMatrikel() {
-        selectedMatrikelFile = chooseFile("Matrikeltabelle auswählen", "Excel files", "*.xlsx", "*.xls", "*.csv");
+        selectedMatrikelFile = chooseFile("Matrikeltabelle auswählen", "Files", "*.xlsx", "*.csv", "*.ods");
         updateFileOutputLabel(matrikelTabelleOutput, selectedMatrikelFile);
         enableMoodleUploadButtonIfReady();
         updatePreviewButtonVisibility(previewMatrikel, selectedMatrikelFile != null);
@@ -108,7 +108,7 @@ public class Controller {
      */
     @FXML
     public void handleFileUploadGrade() {
-        selectedGradeFile = chooseFile("Notentabelle auswählen", "Excel files", "*.xlsx", "*.xls", "*.csv");
+        selectedGradeFile = chooseFile("Notentabelle auswählen", "Files", "*.xlsx", "*.csv", "*.ods");
         updateFileOutputLabel(notenTabelleOutput, selectedGradeFile);
         enableMoodleUploadButtonIfReady();
         updatePreviewButtonVisibility(previewExam, selectedGradeFile != null);
@@ -144,7 +144,14 @@ public class Controller {
      */
     private void updateFileOutputLabel(Label label, File file) {
         if (file != null) {
-            label.setText(file.getName());
+            String fileName = file.getName();
+            int maxLength = 25; // Set the maximum length of the displayed file name
+            if (fileName.length() > maxLength) {
+                String truncatedName = fileName.substring(0, maxLength - 3) + "...";
+                label.setText(truncatedName);
+            } else {
+                label.setText(fileName);
+            }
             label.getStyleClass().removeAll("error");
         } else {
             label.setText("Bitte wählen Sie eine Datei aus !");
@@ -173,7 +180,7 @@ public class Controller {
      * The moodleUploadButton is disabled if either of the files is null.
      */
     private void enableMoodleUploadButtonIfReady() {
-        moodleUploadButton.setDisable(selectedMatrikelFile == null || selectedGradeFile == null);
+        moodleUploadButton.setDisable(selectedGradeFile == null);
     }
 
 
