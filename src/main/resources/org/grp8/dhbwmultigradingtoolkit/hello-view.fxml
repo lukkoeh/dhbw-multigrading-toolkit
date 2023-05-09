@@ -68,6 +68,7 @@
       <Label fx:id="notenTabelleOutput" layoutX="793.0" layoutY="354.0" styleClass="file-output" text=" " />
 
       <!--button to call out usage instruction of tool-->
+      <!--button to call out usage instruction of tool-->
       <Button fx:id="instruction" layoutX="1132.0" layoutY="75.0" mnemonicParsing="false" onAction="#openPdf">
          <graphic>
             <ImageView fitHeight="80" fitWidth="80" pickOnBounds="true" preserveRatio="true">
@@ -105,26 +106,25 @@
 
       <!--info-icons to show the tool tips-->
       <Button fx:id="infoMatrikel" layoutX="60" layoutY="245.0" mnemonicParsing="false" styleClass="miniIcons">
+         <graphic>
+            <ImageView fitHeight="35" fitWidth="35" pickOnBounds="true" preserveRatio="true">
+               <Image url="@images/icon-info.png" />
+            </ImageView>
+         </graphic>
          <tooltip>
             <Tooltip styleClass="tooltip" text="Tabelle mit Matrikelnummer und Namen" />
          </tooltip>
       </Button>
       <Button fx:id="infoExam" layoutX="60" layoutY="350.0" mnemonicParsing="false" styleClass="miniIcons">
+         <graphic>
+            <ImageView fitHeight="35" fitWidth="35" pickOnBounds="true" preserveRatio="true">
+               <Image url="@images/icon-info.png" />
+            </ImageView>
+         </graphic>
          <tooltip>
             <Tooltip styleClass="tooltip" text="Tabelle mit Noten(punkten)" />
          </tooltip>
       </Button>
-      <ImageView fitHeight="35" fitWidth="35" layoutX="70.0" layoutY="245.0" pickOnBounds="true" preserveRatio="true">
-         <Image url="@images/icon-info.png" />
-      </ImageView>
-      <ImageView fitHeight="35" fitWidth="35" layoutX="70.0" layoutY="350.0" pickOnBounds="true" preserveRatio="true">
-         <Image url="@images/icon-info.png" />
-      </ImageView>
-      <ImageView fitHeight="35" fitWidth="35" layoutX="1120.0" layoutY="246.0" pickOnBounds="true" preserveRatio="true">
-         <Image url="@images/icon-eye.png" />
-      </ImageView>
-      <ImageView fitHeight="35" fitWidth="35" layoutX="1120.0" layoutY="347.0" pickOnBounds="true" preserveRatio="true">
-         <Image url="@images/icon-eye.png" />
-      </ImageView>
-        </children>
+
+   </children>
 </AnchorPane>

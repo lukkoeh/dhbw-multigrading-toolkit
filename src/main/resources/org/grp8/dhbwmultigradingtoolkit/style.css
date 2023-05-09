@@ -73,7 +73,7 @@
 
 }
 
-.tableNameForLogin{
+.labelNameForLogin{
     -fx-font-weight: bolder;
     -fx-text-fill:  -fx-dark-grey;
     -fx-font-family: "System Bold";
@@ -88,7 +88,7 @@
     -fx-text-fill: -fx-black;
 }
 
-.abbrechen-button{
+.cancel-button{
 
     -fx-font-weight: bold;
     -fx-font-size:18px;
@@ -110,7 +110,7 @@
 }
 
 
-#anmelden-button {
+#login-button {
     -fx-font-weight: bold;
     -fx-text-fill: -fx-light-grey;
     -fx-background-color: -fx-dark-red;
@@ -118,9 +118,17 @@
     -fx-font-size:18px;
 }
 
-#anmelden-button:pressed {
+#login-button:pressed {
     -fx-background-color: -fx-darker-red;
 }
+
+
+.passwort-input {
+    -fx-background-color: transparent;
+    -fx-background-texture: "****";
+    -fx-text-fill: black;
+}
+
 
 .rounded-rectangle {
     -fx-fill: transparent;
@@ -132,10 +140,4 @@
 .text-area-no-scrollbars {
     -fx-hbar-policy: null;
     -fx-vbar-policy: null;
-}
-
-.passwort-input {
-    -fx-background-color: transparent;
-    -fx-background-texture: "****";
-    -fx-text-fill: black;
 }
