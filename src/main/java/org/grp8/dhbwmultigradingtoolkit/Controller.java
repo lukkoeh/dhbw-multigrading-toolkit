@@ -91,7 +91,7 @@ public class Controller {
      */
     @FXML
     public void handleFileUploadMatrikel() {
-        selectedMatrikelFile = chooseFile("Select Matrikeltabelle", "Excel files", "*.xlsx", "*.xls", "*.csv");
+        selectedMatrikelFile = chooseFile("Matrikeltabelle auswählen", "Excel files", "*.xlsx", "*.xls", "*.csv");
         updateFileOutputLabel(matrikelTabelleOutput, selectedMatrikelFile);
         enableMoodleUploadButtonIfReady();
         updatePreviewButtonVisibility(previewMatrikel, selectedMatrikelFile != null);
@@ -108,7 +108,7 @@ public class Controller {
      */
     @FXML
     public void handleFileUploadGrade() {
-        selectedGradeFile = chooseFile("Select Notentabelle", "Excel files", "*.xlsx", "*.xls", "*.csv");
+        selectedGradeFile = chooseFile("Notentabelle auswählen", "Excel files", "*.xlsx", "*.xls", "*.csv");
         updateFileOutputLabel(notenTabelleOutput, selectedGradeFile);
         enableMoodleUploadButtonIfReady();
         updatePreviewButtonVisibility(previewExam, selectedGradeFile != null);
@@ -145,9 +145,9 @@ public class Controller {
     private void updateFileOutputLabel(Label label, File file) {
         if (file != null) {
             label.setText(file.getName());
-            label.getStyleClass().remove("error");
+            label.getStyleClass().removeAll("error");
         } else {
-            label.setText("Please choose a file !");
+            label.setText("Bitte wählen Sie eine Datei aus !");
             label.getStyleClass().add("error");
         }
     }
