@@ -2,6 +2,7 @@
 .root {
     -fx-font-family: 'System';
     -fx-font-size: 22;
+    -fx-light-red: #E74C41;
     -fx-dark-red: #8E1016;
     -fx-darker-red: #4D070A;
     -fx-black: #211F1F;
@@ -62,7 +63,7 @@
 }
 
 .file-output.error {
-    -fx-text-fill: -fx-dark-red;
+    -fx-text-fill: -fx-light-red;
 }
 
 .table-name{
