@@ -17,22 +17,15 @@ import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 
-import javafx.scene.input.MouseEvent;
 
 public class Controller {
     //Declaration of Button
-    @FXML
-    private Button instruction;
     @FXML
     private Button previewMatrikel;
     @FXML
     private Button previewExam;
     @FXML
     private Button moodleUploadButton;
-    @FXML
-    private Button fileUploadMatrikel;
-    @FXML
-    private Button fileUploadGrade;
     @FXML
     private Label matrikelTabelleOutput;
     @FXML
