@@ -31,10 +31,11 @@ public class Controller {
     @FXML
     private Label notenTabelleOutput;
 
+    @FXML
+    private Button cancelButton;
+
     private File selectedMatrikelFile;
     private File selectedGradeFile;
-
-
 
 
     //linking Instruction-Icon to browser-pdf-document view
@@ -44,12 +45,11 @@ public class Controller {
     }
 
 
-
-
     //linking eye-button to previews
 
     //1. Preview of Matrikeltabelle
     private Stage previewMatrikelStage;
+
     @FXML
     private void showPreviewMatrikel(ActionEvent event) throws IOException {
         if (previewMatrikelStage == null) {
@@ -66,6 +66,7 @@ public class Controller {
 
     //2. Preview of Notentabelle
     private Stage previewExamStage;
+
     @FXML
     private void showPreviewExam(ActionEvent event) throws IOException {
         if (previewExamStage == null) {
@@ -79,8 +80,6 @@ public class Controller {
         // Show the preview window
         previewExamStage.showAndWait();
     }
-
-
 
 
     /**
@@ -98,8 +97,6 @@ public class Controller {
     }
 
 
-
-
     /**
      * Event handler for the file upload action of the Notentabelle file.
      * Prompts the user to select a grade file using a file chooser dialog,
@@ -113,8 +110,6 @@ public class Controller {
         enableMoodleUploadButtonIfReady();
         updatePreviewButtonVisibility(previewExam, selectedGradeFile != null);
     }
-
-
 
 
     /**
@@ -131,8 +126,6 @@ public class Controller {
         fileChooser.getExtensionFilters().add(new ExtensionFilter(description, extensions));
         return fileChooser.showOpenDialog(null);
     }
-
-
 
 
     /**
@@ -153,8 +146,6 @@ public class Controller {
     }
 
 
-
-
     /**
      * Sets the visibility of the preview button based on whether the file is uploaded or not.
      *
@@ -166,8 +157,6 @@ public class Controller {
     }
 
 
-
-
     /**
      * Enables or disables the moodleUploadButton based on the availability of both the selectedMatrikelFile and selectedGradeFile.
      * The moodleUploadButton is disabled if either of the files is null.
@@ -177,6 +166,7 @@ public class Controller {
     }
 
     private Stage mainpageStage;
+
     @FXML
     private void showMainPage(ActionEvent event) throws IOException {
         if (mainpageStage == null) {
@@ -191,4 +181,10 @@ public class Controller {
         mainpageStage.showAndWait();
     }
 
+    @FXML
+    private void closeLoginPage(ActionEvent event) throws IOException {
+
+        Stage stage = (Stage) cancelButton.getScene().getWindow();
+        stage.close();
+    }
 }
