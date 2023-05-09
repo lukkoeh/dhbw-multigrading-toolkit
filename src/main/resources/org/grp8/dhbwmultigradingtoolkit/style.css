@@ -59,12 +59,14 @@
     -fx-alignment: center;
 }
 
-
-
-
 .file-output {
     -fx-font-style: italic;
 }
+
+.file-output.error {
+    -fx-text-fill: -fx-dark-red;
+}
+
 .table-name{
   -fx-font-weight: bold;
 
@@ -80,6 +82,7 @@
 }
 
 .file-upload-button{
+.fileUploadButton{
     -fx-background-radius: 25px;
     -fx-background-color: -fx-light-grey;
     -fx-text-fill: -fx-black;
@@ -94,14 +97,15 @@
     -fx-background-radius: 25px;
 }
 
-#hochladen-button {
+
+#moodleUploadButton {
   -fx-font-weight: bold;
   -fx-text-fill: -fx-light-grey;
   -fx-background-color: -fx-dark-red;
   -fx-background-radius: 25px;
 }
 
-#moodle-upload-button:pressed {
+#moodleUploadButton:pressed {
     -fx-background-color: -fx-darker-red;
 }
 
