@@ -176,15 +176,19 @@ public class Controller {
         moodleUploadButton.setDisable(selectedMatrikelFile == null || selectedGradeFile == null);
     }
 
+    private Stage mainpageStage;
+    @FXML
+    private void showMainPage(ActionEvent event) throws IOException {
+        if (mainpageStage == null) {
+            // connection between MainPage and LoginPage
+            Parent root = FXMLLoader.load(getClass().getResource("hello-view.fxml"));
+            mainpageStage = new Stage();
+            mainpageStage.initModality(Modality.APPLICATION_MODAL);
+            mainpageStage.setScene(new Scene(root));
+        }
 
+        // Show the preview window
+        mainpageStage.showAndWait();
+    }
 
-    //disable Moodle-Upload-Button
-//    public final void disableButton(){
-//        if (fileUploadGrade.getOnMousePressed()){
-//            moodleUploadButton.setDisable(true);
-//        }
-//        else {
-//            moodleUploadButton.setDisable(false);
-//        }
-//    }
 }
