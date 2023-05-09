@@ -49,13 +49,15 @@
   -fx-text-fill: -fx-light-grey;
   -fx-text-transform: uppercase;
   -fx-font-weight: bolder;
-  -fx-font-size: 32;
+  -fx-font-size: 30;
 }
+
 .login-toolname{
     -fx-text-fill: -fx-light-grey;
     -fx-text-transform: uppercase;
     -fx-font-weight: bolder;
-    -fx-font-size: 25;
+    -fx-font-size: 20;
+    -fx-alignment: center;
 }
 
 .file-output {
@@ -68,12 +70,34 @@
 
 .table-name{
   -fx-font-weight: bold;
+
+
 }
+
+.labelNameForLogin{
+    -fx-font-weight: bolder;
+    -fx-text-fill:  -fx-dark-grey;
+    -fx-font-family: "System Bold";
+    -fx-font-size:18px;
+
+}
+
+
 .fileUploadButton{
     -fx-background-radius: 25px;
     -fx-background-color: -fx-light-grey;
     -fx-text-fill: -fx-black;
 }
+
+.cancel-button{
+
+    -fx-font-weight: bold;
+    -fx-font-size:18px;
+    -fx-text-fill: -fx-black;
+    -fx-background-color: -fx-light-grey;
+    -fx-background-radius: 25px;
+}
+
 
 #moodleUploadButton {
   -fx-font-weight: bold;
@@ -84,4 +108,37 @@
 
 #moodleUploadButton:pressed {
     -fx-background-color: -fx-darker-red;
+}
+
+
+#login-button {
+    -fx-font-weight: bold;
+    -fx-text-fill: -fx-light-grey;
+    -fx-background-color: -fx-dark-red;
+    -fx-background-radius: 25px;
+    -fx-font-size:18px;
+}
+
+#login-button:pressed {
+    -fx-background-color: -fx-darker-red;
+}
+
+
+.passwort-input {
+    -fx-background-color: transparent;
+    -fx-background-texture: "****";
+    -fx-text-fill: black;
+}
+
+
+.rounded-rectangle {
+    -fx-fill: transparent;
+    -fx-stroke: gray;
+    -fx-stroke-width: 2px;
+    -fx-arc-width: 20px;
+    -fx-arc-height: 20px;
+}
+.text-area-no-scrollbars {
+    -fx-hbar-policy: null;
+    -fx-vbar-policy: null;
 }
