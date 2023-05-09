@@ -24,13 +24,14 @@
       </Label>
 
       <!--file upload button-->
-      <Button id="fileUploadMatrikel" contentDisplay="CENTER" layoutX="446.0" layoutY="335.0" minWidth="200.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="250.0" styleClass="file-upload-button" text="Datei hochladen" textAlignment="CENTER" AnchorPane.leftAnchor="446.0" AnchorPane.topAnchor="335.0">
+      <Button fx:id="fileUploadMatrikel" contentDisplay="CENTER" layoutX="446.0" layoutY="239.0" minWidth="200.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="250.0" styleClass="fileUploadButton" text="Datei hochladen" textAlignment="CENTER" onAction="#handleFileUploadMatrikel">
       </Button>
-      <Button id="fileUploadGrade" contentDisplay="CENTER" layoutX="446.0" layoutY="239.0" minWidth="200.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="250.0" styleClass="file-upload-button" text="Datei hochladen" textAlignment="CENTER">
+      <Button fx:id="fileUploadGrade" contentDisplay="CENTER" layoutX="446.0" layoutY="335.0" minWidth="200.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="250.0" styleClass="fileUploadButton" text="Datei hochladen" textAlignment="CENTER" AnchorPane.leftAnchor="446.0" AnchorPane.topAnchor="335.0" onAction="#handleFileUploadGrade">
       </Button>
 
+
       <!--moodle upload button-->
-      <Button id="moodleUploadButton" disable="true" layoutX="904.0" layoutY="610.0" minHeight="35.0" minWidth="35.0" mnemonicParsing="false" opacity="0.5" prefHeight="50.0" prefWidth="325.0" text="Hochladen auf Moodle" AnchorPane.bottomAnchor="60.0" AnchorPane.rightAnchor="50.66666666666674">
+      <Button fx:id="moodleUploadButton" disable="true" layoutX="904.0" layoutY="610.0" minHeight="35.0" minWidth="35.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="325.0" text="Hochladen auf Moodle" AnchorPane.bottomAnchor="60.0" AnchorPane.rightAnchor="50.66666666666674">
       </Button>
 
       <!--DHBW Logo-->
@@ -41,8 +42,8 @@
       </ImageView>
 
       <!--name of uploaded files-->
-      <Label layoutX="793.0" layoutY="249.0" styleClass="file-output" text="Matrikeltabelle.xlsx" />
-      <Label layoutX="793.0" layoutY="354.0" styleClass="file-output" text="Prüfungsergebnistabelle.xlsx" />
+      <Label fx:id="matrikelTabelleOutput" layoutX="793.0" layoutY="249.0" styleClass="file-output" text=" " />
+      <Label fx:id="notenTabelleOutput" layoutX="793.0" layoutY="354.0" styleClass="file-output" text=" " />
 
       <!--button to call out usage instruction of tool-->
       <Button fx:id="instruction" layoutX="1132.0" layoutY="75.0" mnemonicParsing="false" onAction="#openPdf">
@@ -57,7 +58,7 @@
       </Button>
 
       <!--button to call out preview of Matrikeltabelle-->
-      <Button fx:id="previewMatrikel" layoutX="1114" layoutY="245.0" mnemonicParsing="false" onAction="#showPreviewMatrikel" styleClass="miniIcons">
+      <Button fx:id="previewMatrikel" layoutX="1114" layoutY="245.0" mnemonicParsing="false" visible="false" onAction="#showPreviewMatrikel" styleClass="miniIcons">
          <graphic>
             <ImageView fitHeight="35" fitWidth="35" pickOnBounds="true" preserveRatio="true">
                <Image url="@images/icon-eye.png" />
@@ -69,7 +70,7 @@
       </Button>
 
       <!--button to call out preview of Notentabelle-->
-      <Button fx:id="previewExam" layoutX="1114" layoutY="350.0" mnemonicParsing="false" onAction="#showPreviewExam" styleClass="miniIcons">
+      <Button fx:id="previewExam" layoutX="1114" layoutY="350.0" mnemonicParsing="false" visible="false" onAction="#showPreviewExam" styleClass="miniIcons">
          <graphic>
             <ImageView fitHeight="35" fitWidth="35" pickOnBounds="true" preserveRatio="true">
                <Image url="@images/icon-eye.png" />
