@@ -68,8 +68,7 @@ public class SheetManager {
                 String[] dataarr = line.split(";");
                 this.meta.put(dataarr[0], dataarr[1]);
                 line = s.readLine();
-                if (i == 8) {
-                    s.readLine();
+                if (i == 9) {
                     s.readLine();
                     line = s.readLine();
                     break;
@@ -79,8 +78,12 @@ public class SheetManager {
             while (line != null) {
                 String[] dataarr = line.split(";");
                 ArrayList<String> dataList = new ArrayList<>();
-                for (i = 0; i < dataarr.length; i++) {
-                    dataList.add(dataarr[i]);
+                for (i = 0; i < 6; i++) {
+                    if(i >= dataarr.length ){
+                        dataList.add("");
+                    }else {
+                        dataList.add(dataarr[i]);
+                    }
                 }
                 this.data.add(dataList);
                 line = s.readLine();
@@ -110,11 +113,11 @@ public class SheetManager {
             XSSFWorkbook wb = new XSSFWorkbook(fis);
             fis.close();
             XSSFSheet sheet = wb.getSheetAt(0);
-            Iterator<Row> itr = sheet.iterator();
+            Iterator<Row> rowIterator = sheet.iterator();
             int i = 1;
-            itr.next();
-            while (itr.hasNext()) {
-                Row row = itr.next();
+            rowIterator.next();
+            while (rowIterator.hasNext()) {
+                Row row = rowIterator.next();
                 Iterator<Cell> c = row.cellIterator();
                 String[] metas = new String[2];
                 int z = 0;
@@ -135,11 +138,11 @@ public class SheetManager {
                 }
                 i++;
             }
-            itr.next();
-            itr.next();
-            while (itr.hasNext()) {
-                Row row = itr.next();
-                ArrayList<String> dataarr = new ArrayList<>();
+            rowIterator.next();
+            rowIterator.next();
+            while (rowIterator.hasNext()) {
+                Row row = rowIterator.next();
+                ArrayList<String> dataArr = new ArrayList<>();
                 Iterator<Cell> cellitr = row.cellIterator();
                 boolean isEmpty = true;
                 while (cellitr.hasNext()) {
@@ -149,25 +152,31 @@ public class SheetManager {
                         break;
                     }
                 }
-                cellitr = row.cellIterator();
                 if (!isEmpty) {
-                    while (cellitr.hasNext()) {
-                        Cell cell = cellitr.next();
-                        switch (cell.getCellType()) {
-                            case STRING -> dataarr.add(cell.getStringCellValue());
-                            case NUMERIC -> {
-                                double d = cell.getNumericCellValue();
-                                dataarr.add(Integer.toString((int) d));
+                    for(int cellIndex = 0; cellIndex < 6 /*TODO: Falls notwendig: Größe einer Zeile als globale Variable. oder dataArr als echten Array*/; cellIndex++){
+                        Cell cell = row.getCell(cellIndex, Row.MissingCellPolicy.RETURN_BLANK_AS_NULL);
+                        if(cell != null) {
+                            switch (cell.getCellType()) {
+                                case STRING -> dataArr.add(cell.getStringCellValue());
+                                case NUMERIC -> {
+                                    double d = cell.getNumericCellValue();
+                                    dataArr.add(Integer.toString((int) d));
+                                }
                             }
+                        }else{
+                            dataArr.add("");
                         }
                     }
-                    this.data.add(dataarr);
+                    this.data.add(dataArr);
                 }
 
             }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+        Alert a = new Alert(Alert.AlertType.INFORMATION);
+        a.setContentText(this.meta.toString() + this.data.toString());
+        a.showAndWait();
     }
 
     /**
@@ -181,31 +190,47 @@ public class SheetManager {
             OdfSpreadsheetDocument ods = OdfSpreadsheetDocument.loadDocument(f);
             OdfContentDom content = ods.getContentDom();
             NodeList rowList = content.getElementsByTagName("table:table-row");
-            for (int i = 1; i < 8; i++) { //fill meta
+            for (int i = 1; i < 9; i++) { //fill meta
                 NodeList cellList = rowList.item(i).getChildNodes();
                 this.meta.put(cellList.item(0).getFirstChild().getTextContent(), cellList.item(1).getFirstChild().getTextContent());
             }
             for (int i = 11; i < rowList.getLength(); i++) {
                 NodeList cellList = rowList.item(i).getChildNodes();
-                ArrayList<String> dataarr = new ArrayList<>();
+
+                // Leere Zellen am Ende der Zeilen löschen
+                if(cellList.getLength() > 6){
+                    for(int emptyNodeIndex = 0; emptyNodeIndex <= cellList.getLength()-6; emptyNodeIndex++){
+                        cellList.item(6-emptyNodeIndex).getParentNode().removeChild(cellList.item(6-emptyNodeIndex));
+                    }
+                }
+                ArrayList<String> dataArr = new ArrayList<>();
                 boolean isEmpty = true;
                 for (int a = 0; a < cellList.getLength(); a++) {
-                    if (cellList.item(a).getFirstChild() == null) {
-                        break;
-                    }
-                    String tester = cellList.item(a).getFirstChild().getTextContent();
-                    if (tester != null) {
+                    String tester = "";
+                    Node currentItem = cellList.item(a);
+                    if (currentItem.getFirstChild() != null) {
                         isEmpty = false;
+                        tester = cellList.item(a).getFirstChild().getTextContent();
                     }
-                    dataarr.add(tester);
+
+                    dataArr.add(tester);
                 }
+
+                // Falls Vor- und Nachname fehlen
                 if (!isEmpty) {
-                    this.data.add(dataarr);
+                    if(dataArr.size() < 6 && dataArr.get(1).equals("")){
+                        dataArr.add(1, "");
+                    }
+                    this.data.add(dataArr);
                 }
+
             }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+        Alert a = new Alert(Alert.AlertType.INFORMATION);
+        a.setContentText(this.meta.toString() + this.data.toString());
+        a.showAndWait();
     }
 
     /**
@@ -216,25 +241,11 @@ public class SheetManager {
     private void mergeData(String path) {
         try{
             MatriculationIndex index = new MatriculationIndex(path);
-            Iterator<ArrayList<String>> dataitr = this.data.iterator();
-            while (dataitr.hasNext()) {
-                ArrayList<String> tmp = dataitr.next();
-                if (tmp.size() == 4 && !Objects.equals(tmp.get(0), "")) {
+            for (ArrayList<String> tmp : this.data) {
+                if (!Objects.equals(tmp.get(0), "")) {
                     Student s = index.findStudentByNumber(tmp.get(0));
-                    tmp.add(1, s.getFirstname());
-                    tmp.add(2, s.getLastname());
-                }
-                else if (tmp.size() == 5 && !Objects.equals(tmp.get(0), "")) {
-                    tmp.remove(1);
-                    Student s = index.findStudentByNumber(tmp.get(0));
-                    tmp.add(1, s.getFirstname());
-                    tmp.add(2, s.getLastname());
-                }
-                else {
-                    Alert a = new Alert(Alert.AlertType.ERROR);
-                    a.setHeight(400);
-                    a.setContentText("Es ist ein Fehler beim Verarbeiten der Notentabelle aufgetreten. Bitte überprüfen Sie, ob die Tabelle dem erforderlichen Format entspricht.");
-                    a.showAndWait();
+                    tmp.set(1, s.getFirstname());
+                    tmp.set(2, s.getLastname());
                 }
             }
             System.out.println(this.data);
@@ -247,4 +258,15 @@ public class SheetManager {
         }
 
     }
+
+    public HashMap<String, String> getMeta() {
+        System.out.println(this.meta);
+        return meta;
+    }
+
+    public ArrayList<ArrayList<String>> getData() {
+        System.out.println(this.data);
+        return data;
+    }
+
 }
