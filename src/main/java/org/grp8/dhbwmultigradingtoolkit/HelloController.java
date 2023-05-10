@@ -13,7 +13,7 @@ public class HelloController {
 
     @FXML
     protected void onHelloButtonClick() {
-        SheetManager s = new SheetManager("C:\\Users\\lkoehler\\IdeaProjects\\dhbw-multigrading-toolkit\\parse.csv", "C:\\Users\\lkoehler\\IdeaProjects\\dhbw-multigrading-toolkit\\matrikel.xlsx");
+        SheetManager s = new SheetManager(".\\parse.csv", ".\\matrikel.xlsx");
         String[] creds = new String[2];
         {
             creds[0] = txt_user.getText();
