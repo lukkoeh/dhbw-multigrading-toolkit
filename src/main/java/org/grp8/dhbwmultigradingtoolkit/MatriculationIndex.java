@@ -19,11 +19,10 @@ public class MatriculationIndex {
     /**
      * A class that represents an index of matriculation numbers and the respective names. Provides diverse Methods to interact with
      * the dataset.
-     * @param path path to xlsx input file to generate student index
+     * @param f xlsx input file to generate student index
      */
     public MatriculationIndex(File f) {
         try {
-            File f = new File(path);
             FileInputStream fis = new FileInputStream(f);
             XSSFWorkbook wb = new XSSFWorkbook(fis);
             XSSFSheet sheet = wb.getSheetAt(0);

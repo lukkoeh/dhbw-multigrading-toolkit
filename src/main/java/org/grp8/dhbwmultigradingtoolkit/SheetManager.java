@@ -43,7 +43,7 @@ public class SheetManager {
                 case "xlsx" -> parseXLSX(path);
                 case "ods" -> parseODS(path);
             }
-            mergeData(pathmatrikel);
+            mergeData(matrikel);
 
         } catch (Exception ex) {
             ex.printStackTrace();
