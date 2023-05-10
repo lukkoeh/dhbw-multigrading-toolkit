@@ -13,5 +13,15 @@
          <font>
             <Font name="Arial Bold" size="22.0" />
          </font></Label>
+      <TableView fx:id="tablepreviewdata" layoutY="40.0" prefHeight="510.0" prefWidth="924.0">
+        <columns>
+            <TableColumn fx:id="colno" prefWidth="161.0" text="Matrikelnummer" />
+          <TableColumn fx:id="colfirstname" prefWidth="94.0" text="Vorname" />
+          <TableColumn fx:id="collastname" prefWidth="92.0" text="Nachname" />
+            <TableColumn fx:id="colpoints" prefWidth="125.0" text="Erreichte Punkte" />
+            <TableColumn fx:id="colpercent" prefWidth="161.0" text="Prozentpunkte" />
+            <TableColumn fx:id="colfeedback" minWidth="0.0" prefWidth="290.0" text="Feedback" />
+        </columns>
+      </TableView>
    </children>
 </AnchorPane>

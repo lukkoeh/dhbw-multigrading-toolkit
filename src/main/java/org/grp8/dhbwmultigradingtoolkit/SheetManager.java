@@ -34,7 +34,8 @@ public class SheetManager {
     private final HashMap<String, String> meta = new HashMap<>();
     private final ArrayList<ArrayList<String>> data = new ArrayList<>(); // example: Number (String) + all other columns as arraylist
 
-    public SheetManager(String path, String pathmatrikel) {
+    public SheetManager(File datatable, File matrikel) {
+        String path = datatable.getPath();
         try {
             String extension = FilenameUtils.getExtension(path);
             switch (extension) {
@@ -45,6 +46,20 @@ public class SheetManager {
             mergeData(pathmatrikel);
 
         } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public SheetManager(File table) {
+        String path = table.getPath();
+        try {
+            String extension = FilenameUtils.getExtension(path);
+            switch (extension) {
+                case "csv" -> parseCSV(path);
+                case "xlsx" -> parseXLSX(path);
+                case "ods" -> parseODS(path);
+            }
+        } catch(Exception ex) {
             ex.printStackTrace();
         }
     }
@@ -89,9 +104,6 @@ public class SheetManager {
                 line = s.readLine();
             }
             s.close();
-            Alert a = new Alert(Alert.AlertType.INFORMATION);
-            a.setContentText(this.meta.toString() + this.data.toString());
-            a.showAndWait();
         } catch (FileNotFoundException ex) {
             Alert a = new Alert(Alert.AlertType.ERROR);
             a.setContentText("The file was not found. Please check the path.");
@@ -238,7 +250,7 @@ public class SheetManager {
      * Array.
      * @param path path to the table to generate index
      */
-    private void mergeData(String path) {
+    private void mergeData(File path) {
         try{
             MatriculationIndex index = new MatriculationIndex(path);
             for (ArrayList<String> tmp : this.data) {
@@ -248,7 +260,6 @@ public class SheetManager {
                     tmp.set(2, s.getLastname());
                 }
             }
-            System.out.println(this.data);
         } catch (Exception ex){
             Alert a = new Alert(Alert.AlertType.ERROR);
             a.setContentText("Es ist ein Fehler beim Verarbeiten der Matrikelnummern aufgetreten. Bitte überprüfen Sie die Matrikeltabelle.");

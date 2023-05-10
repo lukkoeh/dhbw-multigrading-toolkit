@@ -1,24 +1,39 @@
 package org.grp8.dhbwmultigradingtoolkit;
 
+import com.sun.javafx.scene.control.InputField;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.fxml.Initializable;
+import javafx.scene.control.*;
+
 import java.awt.*;
 import java.io.IOException;
 import java.io.File;
+import java.lang.reflect.Array;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.ResourceBundle;
+
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import org.w3c.dom.Text;
 
 
-public class Controller {
+public class Controller implements Initializable {
     //Declaration of Button
     @FXML
     private Button previewMatrikel;
@@ -37,6 +52,15 @@ public class Controller {
     private File selectedMatrikelFile;
     private File selectedGradeFile;
 
+    @FXML
+    private TextField inputuser;
+    @FXML
+    private PasswordField inputpassword;
+    @FXML
+    private TableView<String> tablepreviewmatrikel;
+
+    private static String[] creds = new String[2];
+
 
     //linking Instruction-Icon to browser-pdf-document view
     @FXML
@@ -53,6 +77,11 @@ public class Controller {
     @FXML
     private void showPreviewMatrikel(ActionEvent event) throws IOException {
         if (previewMatrikelStage == null) {
+            MatriculationIndex m = new MatriculationIndex(selectedMatrikelFile);
+            ArrayList<Student> data = m.getStudents();
+            ObservableList<Student> odatatmp = FXCollections.observableArrayList();
+            odatatmp.addAll(data);
+            PreviewMatriculationController.odata = odatatmp;
             // Load preview-matrikeltabelle.fxml and create a new stage
             Parent root = FXMLLoader.load(getClass().getResource("preview-matrikeltabelle.fxml"));
             previewMatrikelStage = new Stage();
@@ -70,15 +99,22 @@ public class Controller {
     @FXML
     private void showPreviewExam(ActionEvent event) throws IOException {
         if (previewExamStage == null) {
+            SheetManager s = new SheetManager(selectedGradeFile);
+            ArrayList<ArrayList<String>> data = s.getData();
+            ObservableList<PreviewGrade> odatatmp = FXCollections.observableArrayList();
+            for (int i = 0; i < data.size(); i++) {
+                PreviewGrade p = new PreviewGrade(data.get(i).get(0), data.get(i).get(1), data.get(i).get(2), data.get(i).get(3), data.get(i).get(4), data.get(i).get(5));
+                odatatmp.add(p);
+            }
+            PreviewController.odata = odatatmp;
             // Load preview-notentabelle.fxml and create a new stage
             Parent root = FXMLLoader.load(getClass().getResource("preview-notentabelle.fxml"));
             previewExamStage = new Stage();
             previewExamStage.initModality(Modality.APPLICATION_MODAL);
             previewExamStage.setScene(new Scene(root));
+            previewExamStage.showAndWait();
         }
-
         // Show the preview window
-        previewExamStage.showAndWait();
     }
 
 
@@ -176,6 +212,8 @@ public class Controller {
 
     @FXML
     private void showMainPage(ActionEvent event) throws IOException {
+        creds[0] = inputuser.getText();
+        creds[1] = inputpassword.getText();
         if (mainpageStage == null) {
             // connection between MainPage and LoginPage
             Parent root = FXMLLoader.load(getClass().getResource("hello-view.fxml"));
@@ -193,5 +231,16 @@ public class Controller {
 
         Stage stage = (Stage) cancelButton.getScene().getWindow();
         stage.close();
+    }
+
+    @FXML
+    private void startProcess() {
+        SheetManager s = new SheetManager(selectedGradeFile, selectedMatrikelFile);
+        Bot b = new Bot(creds, s);
+        b.start();
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
     }
 }

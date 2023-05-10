@@ -21,7 +21,7 @@ public class MatriculationIndex {
      * the dataset.
      * @param path path to xlsx input file to generate student index
      */
-    public MatriculationIndex(String path) {
+    public MatriculationIndex(File f) {
         try {
             File f = new File(path);
             FileInputStream fis = new FileInputStream(f);
@@ -82,5 +82,9 @@ public class MatriculationIndex {
         }
         System.out.println("Student with number: " + number + " was not found.");
         return null;
+    }
+
+    public ArrayList<Student> getStudents() {
+        return students;
     }
 }
