@@ -105,22 +105,28 @@
       </Button>
 
       <!--info-icons to show the tool tips-->
-      <Button fx:id="infoMatrikel" layoutX="60" layoutY="245.0" mnemonicParsing="false" styleClass="miniIcons">
+      <Button fx:id="infoMatrikel" layoutX="60.0" layoutY="343.0" mnemonicParsing="false" styleClass="miniIcons">
+         <graphic>
+            <ImageView fitHeight="35" fitWidth="35" pickOnBounds="true" preserveRatio="true">
+               <Image url="@images/icon-info.png" />
+            </ImageView>
+         </graphic>
          <tooltip>
             <Tooltip styleClass="tooltip" text="Tabelle mit Matrikelnummer und Namen" />
          </tooltip>
       </Button>
-      <Button fx:id="infoExam" layoutX="60" layoutY="350.0" mnemonicParsing="false" styleClass="miniIcons">
+      <Button fx:id="infoExam" layoutX="60.0" layoutY="238.0" mnemonicParsing="false" styleClass="miniIcons">
+         <graphic>
+            <ImageView fitHeight="35" fitWidth="35" pickOnBounds="true" preserveRatio="true">
+               <Image url="@images/icon-info.png" />
+            </ImageView>
+         </graphic>
          <tooltip>
             <Tooltip styleClass="tooltip" text="Tabelle mit Noten(punkten)" />
          </tooltip>
       </Button>
-      <ImageView fitHeight="35" fitWidth="35" layoutX="72.0" layoutY="353.0" pickOnBounds="true" preserveRatio="true">
-         <Image url="@images/icon-info.png" />
-      </ImageView>
-      <ImageView fitHeight="35" fitWidth="35" layoutX="72.0" layoutY="246.0" pickOnBounds="true" preserveRatio="true">
-         <Image url="@images/icon-info.png" />
-      </ImageView>
+
+
 
    </children>
 </AnchorPane>
