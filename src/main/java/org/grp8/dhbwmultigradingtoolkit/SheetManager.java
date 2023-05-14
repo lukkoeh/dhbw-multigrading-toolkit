@@ -34,22 +34,6 @@ public class SheetManager {
     private final HashMap<String, String> meta = new HashMap<>();
     private final ArrayList<ArrayList<String>> data = new ArrayList<>(); // example: Number (String) + all other columns as arraylist
 
-    public SheetManager(File datatable, File matrikel) {
-        String path = datatable.getPath();
-        try {
-            String extension = FilenameUtils.getExtension(path);
-            switch (extension) {
-                case "csv" -> parseCSV(path);
-                case "xlsx" -> parseXLSX(path);
-                case "ods" -> parseODS(path);
-            }
-            mergeData(matrikel);
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-
     public SheetManager(File table) {
         String path = table.getPath();
         try {
@@ -62,6 +46,15 @@ public class SheetManager {
         } catch(Exception ex) {
             ex.printStackTrace();
         }
+    }
+
+    public boolean mergeNeeded() {
+        for (ArrayList<String> element : data) {
+            if (element.get(1).equals("") || element.get(2).equals("")) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -186,9 +179,6 @@ public class SheetManager {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        Alert a = new Alert(Alert.AlertType.INFORMATION);
-        a.setContentText(this.meta.toString() + this.data.toString());
-        a.showAndWait();
     }
 
     /**
@@ -240,19 +230,16 @@ public class SheetManager {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        Alert a = new Alert(Alert.AlertType.INFORMATION);
-        a.setContentText(this.meta.toString() + this.data.toString());
-        a.showAndWait();
     }
-
+    
     /**
      * The mergeData function joins the given table with the existing data on the SheetManager object, thus creating a complete
      * Array.
-     * @param path path to the table to generate index
+     * @param matriculationFile table file to generate index
      */
-    private void mergeData(File path) {
+    public void mergeData(File matriculationFile) {
         try{
-            MatriculationIndex index = new MatriculationIndex(path);
+            MatriculationIndex index = MatriculationIndex.getInstance(matriculationFile);
             for (ArrayList<String> tmp : this.data) {
                 if (!Objects.equals(tmp.get(0), "")) {
                     Student s = index.findStudentByNumber(tmp.get(0));
@@ -271,12 +258,10 @@ public class SheetManager {
     }
 
     public HashMap<String, String> getMeta() {
-        System.out.println(this.meta);
         return meta;
     }
 
     public ArrayList<ArrayList<String>> getData() {
-        System.out.println(this.data);
         return data;
     }
 

@@ -1,5 +1,8 @@
 package org.grp8.dhbwmultigradingtoolkit;
 
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -13,7 +16,7 @@ import java.util.*;
 
 public class Bot {
     private String starturl;
-    private final WebDriver botwindow;
+    private WebDriver botwindow;
     private String[] credentials = new String[2];
     private final HashMap<String, String> metainformation;
     private final ArrayList<ArrayList<String>> dataarray;
@@ -31,7 +34,15 @@ public class Bot {
             if (Objects.equals(botwindow.getCurrentUrl(), "https://moodle.mosbach.dhbw.de/login/index.php")) {
                 boolean loggedin = handleLogin();
                 if (!loggedin) {
-                    System.out.println("Login failed");
+                    Alert a = new Alert(Alert.AlertType.ERROR);
+                    a.setContentText("Beim Einloggen in Moodle ist ein Fehler aufgetreten. Bitte geben Sie ihre Zugangsdaten erneut ein.");
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("relogin.fxml"));
+                    loader.load();
+                    Controller c = loader.getController();
+                    botwindow.close();
+                    c.openLoginPage();
+                    botwindow = new ChromeDriver();
+                    this.start();
                 } else {
                     System.out.println("Login successful");
                 }
@@ -97,41 +108,6 @@ public class Bot {
             }
         }
         throw new NoSuchElementException("Dataset was not found: " + name);
-    }
-
-    public void insertGrade(String grade) {
-        WebElement w = new WebDriverWait(botwindow, Duration.ofSeconds(10)).until(ExpectedConditions.elementToBeClickable(new By.ById("id_grade")));
-        w.clear();
-        w.sendKeys(grade);
-    }
-
-    public void insertComment(String comment) {
-        try {
-            WebElement w = new WebDriverWait(botwindow, Duration.ofSeconds(10)).until(ExpectedConditions.presenceOfElementLocated(new By.ByCssSelector("iframe")));
-            botwindow.switchTo().frame(w);
-            WebElement a = new WebDriverWait(botwindow, Duration.ofSeconds(10)).until(ExpectedConditions.elementToBeClickable(new By.ByCssSelector("#tinymce")));
-            a.click();
-            a.clear();
-            a.sendKeys(comment);
-            String handle = botwindow.getWindowHandle();
-            botwindow.switchTo().window(handle);
-        } catch(Exception ex) {
-            ex.printStackTrace();
-        }
-
-    }
-
-    public void clickSaveNext() {
-        try {
-            WebElement w = new WebDriverWait(botwindow, Duration.ofSeconds(10)).until(ExpectedConditions.elementToBeClickable(new By.ByCssSelector("button[name=\"saveandshownext\"]")));
-            w.click();
-            Thread.sleep(200);
-            WebElement q = new WebDriverWait(botwindow, Duration.ofSeconds(10)).until(ExpectedConditions.elementToBeClickable(new By.ByCssSelector("button[data-action=\"cancel\"]")));
-            q.click();
-            Thread.sleep(200);
-        } catch(Exception ex) {
-            System.out.println("brumm");
-        }
     }
 
     public void prepareGrading() {

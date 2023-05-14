@@ -1,6 +1,5 @@
 package org.grp8.dhbwmultigradingtoolkit;
 
-import com.sun.javafx.scene.control.InputField;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -10,27 +9,25 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
 import java.awt.*;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.io.File;
-import java.lang.reflect.Array;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import org.w3c.dom.Text;
 
 
 public class Controller implements Initializable {
@@ -57,10 +54,12 @@ public class Controller implements Initializable {
     @FXML
     private PasswordField inputpassword;
     @FXML
-    private TableView<String> tablepreviewmatrikel;
+    private Button btnrelogin;
 
     private static String[] creds = new String[2];
 
+    private SheetManager s;
+    private Stage mainpageStage;
 
     //linking Instruction-Icon to browser-pdf-document view
     @FXML
@@ -76,18 +75,16 @@ public class Controller implements Initializable {
 
     @FXML
     private void showPreviewMatrikel(ActionEvent event) throws IOException {
-        if (previewMatrikelStage == null) {
-            MatriculationIndex m = new MatriculationIndex(selectedMatrikelFile);
-            ArrayList<Student> data = m.getStudents();
-            ObservableList<Student> odatatmp = FXCollections.observableArrayList();
-            odatatmp.addAll(data);
-            PreviewMatriculationController.odata = odatatmp;
-            // Load preview-matrikeltabelle.fxml and create a new stage
-            Parent root = FXMLLoader.load(getClass().getResource("preview-matrikeltabelle.fxml"));
-            previewMatrikelStage = new Stage();
-            previewMatrikelStage.initModality(Modality.APPLICATION_MODAL);
-            previewMatrikelStage.setScene(new Scene(root));
-        }
+        MatriculationIndex m = MatriculationIndex.getInstance(selectedMatrikelFile);
+        ArrayList<Student> data = m.getStudents();
+        ObservableList<Student> odatatmp = FXCollections.observableArrayList();
+        odatatmp.addAll(data);
+        PreviewMatriculationController.odata = odatatmp;
+        // Load preview-matrikeltabelle.fxml and create a new stage
+        Parent root = FXMLLoader.load(getClass().getResource("preview-matrikeltabelle.fxml"));
+        previewMatrikelStage = new Stage();
+        previewMatrikelStage.initModality(Modality.APPLICATION_MODAL);
+        previewMatrikelStage.setScene(new Scene(root));
 
         // Show the preview window
         previewMatrikelStage.showAndWait();
@@ -98,22 +95,19 @@ public class Controller implements Initializable {
 
     @FXML
     private void showPreviewExam(ActionEvent event) throws IOException {
-        if (previewExamStage == null) {
-            SheetManager s = new SheetManager(selectedGradeFile);
-            ArrayList<ArrayList<String>> data = s.getData();
-            ObservableList<PreviewGrade> odatatmp = FXCollections.observableArrayList();
-            for (int i = 0; i < data.size(); i++) {
-                PreviewGrade p = new PreviewGrade(data.get(i).get(0), data.get(i).get(1), data.get(i).get(2), data.get(i).get(3), data.get(i).get(4), data.get(i).get(5));
-                odatatmp.add(p);
-            }
-            PreviewController.odata = odatatmp;
-            // Load preview-notentabelle.fxml and create a new stage
-            Parent root = FXMLLoader.load(getClass().getResource("preview-notentabelle.fxml"));
-            previewExamStage = new Stage();
-            previewExamStage.initModality(Modality.APPLICATION_MODAL);
-            previewExamStage.setScene(new Scene(root));
-            previewExamStage.showAndWait();
+        ArrayList<ArrayList<String>> data = s.getData();
+        ObservableList<PreviewGrade> odatatmp = FXCollections.observableArrayList();
+        for (int i = 0; i < data.size(); i++) {
+            PreviewGrade p = new PreviewGrade(data.get(i).get(0), data.get(i).get(1), data.get(i).get(2), data.get(i).get(3), data.get(i).get(4), data.get(i).get(5));
+            odatatmp.add(p);
         }
+        PreviewController.odata = odatatmp;
+        // Load preview-notentabelle.fxml and create a new stage
+        Parent root = FXMLLoader.load(getClass().getResource("preview-notentabelle.fxml"));
+        previewExamStage = new Stage();
+        previewExamStage.initModality(Modality.APPLICATION_MODAL);
+        previewExamStage.setScene(new Scene(root));
+        previewExamStage.showAndWait();
         // Show the preview window
     }
 
@@ -127,9 +121,32 @@ public class Controller implements Initializable {
     @FXML
     public void handleFileUploadMatrikel() {
         selectedMatrikelFile = chooseFile("Matrikeltabelle auswählen", "Files", "*.xlsx", "*.csv", "*.ods");
-        updateFileOutputLabel(matrikelTabelleOutput, selectedMatrikelFile);
-        enableMoodleUploadButtonIfReady();
-        updatePreviewButtonVisibility(previewMatrikel, selectedMatrikelFile != null);
+        if (selectedGradeFile == null) {
+            moodleUploadButton.setDisable(true);
+            updateFileOutputLabel(matrikelTabelleOutput, selectedMatrikelFile);
+            updatePreviewButtonVisibility(previewMatrikel, selectedMatrikelFile != null);
+            return;
+        }
+        s = new SheetManager(selectedGradeFile);
+        if (selectedMatrikelFile != null) {
+            if(s.mergeNeeded()){
+                s.mergeData(selectedMatrikelFile);
+                moodleUploadButton.setDisable(false);
+                updateFileOutputLabel(matrikelTabelleOutput, selectedMatrikelFile);
+                updatePreviewButtonVisibility(previewMatrikel, selectedMatrikelFile != null);
+            }
+        }
+        else {
+            if(s.mergeNeeded()){
+                moodleUploadButton.setDisable(true);
+                showFileError(matrikelTabelleOutput);
+            }
+        }
+    }
+
+    private void showFileError(Label label) {
+        label.setText("Bitte wählen Sie eine Datei aus!");
+        label.getStyleClass().add("error");
     }
 
 
@@ -142,9 +159,24 @@ public class Controller implements Initializable {
     @FXML
     public void handleFileUploadGrade() {
         selectedGradeFile = chooseFile("Notentabelle auswählen", "Files", "*.xlsx", "*.csv", "*.ods");
-        updateFileOutputLabel(notenTabelleOutput, selectedGradeFile);
-        enableMoodleUploadButtonIfReady();
-        updatePreviewButtonVisibility(previewExam, selectedGradeFile != null);
+        if (selectedGradeFile != null) {
+            s = new SheetManager(selectedGradeFile);
+            if(s.mergeNeeded()){
+                s.mergeData(selectedMatrikelFile);
+            }
+            updateFileOutputLabel(notenTabelleOutput, selectedGradeFile);
+            updatePreviewButtonVisibility(previewExam, selectedGradeFile != null);
+            if(s.mergeNeeded() && selectedMatrikelFile == null){
+                moodleUploadButton.setDisable(true);
+            }else{
+                moodleUploadButton.setDisable(false);
+            }
+        }
+        else {
+            moodleUploadButton.setDisable(true);
+            notenTabelleOutput.setText("Bitte wählen Sie eine Datei aus!");
+            notenTabelleOutput.getStyleClass().add("error");
+        }
     }
 
 
@@ -182,9 +214,6 @@ public class Controller implements Initializable {
                 label.setText(fileName);
             }
             label.getStyleClass().removeAll("error");
-        } else {
-            label.setText("Bitte wählen Sie eine Datei aus !");
-            label.getStyleClass().add("error");
         }
     }
 
@@ -214,6 +243,13 @@ public class Controller implements Initializable {
     private void showMainPage(ActionEvent event) throws IOException {
         creds[0] = inputuser.getText();
         creds[1] = inputpassword.getText();
+        if (Objects.equals(creds[0], "") || Objects.equals(creds[1], "")) {
+            /*Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setContentText("Bitte geben Sie Zugangsdaten ein.");
+            a.showAndWait();
+            return;*/
+        }
+        this.closeLoginPage(event);
         if (mainpageStage == null) {
             // connection between MainPage and LoginPage
             Parent root = FXMLLoader.load(getClass().getResource("hello-view.fxml"));
@@ -225,7 +261,29 @@ public class Controller implements Initializable {
         // Show the preview window
         mainpageStage.showAndWait();
     }
+    @FXML
+    public void openLoginPage() throws IOException {
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        Parent root = FXMLLoader.load(getClass().getResource("relogin.fxml"));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.showAndWait();
+    }
 
+    @FXML
+    private void updateLoginData(ActionEvent event) throws IOException {
+        creds[0] = inputuser.getText();
+        creds[1] = inputpassword.getText();
+        if (Objects.equals(creds[0], "") || Objects.equals(creds[1], "")) {
+            /*Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setContentText("Bitte geben Sie Zugangsdaten ein.");
+            a.showAndWait();
+            return;*/
+        }
+        Stage stage = (Stage) btnrelogin.getScene().getWindow();
+        stage.close();
+    }
     @FXML
     private void closeLoginPage(ActionEvent event) throws IOException {
 
