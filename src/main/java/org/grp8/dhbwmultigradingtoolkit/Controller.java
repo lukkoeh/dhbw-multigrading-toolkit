@@ -233,11 +233,7 @@ public class Controller implements Initializable {
      * Enables or disables the moodleUploadButton based on the availability of both the selectedMatrikelFile and selectedGradeFile.
      * The moodleUploadButton is disabled if either of the files is null.
      */
-    private void enableMoodleUploadButtonIfReady() {
-        moodleUploadButton.setDisable(selectedGradeFile == null);
-    }
 
-    private Stage mainpageStage;
 
     @FXML
     private void showMainPage(ActionEvent event) throws IOException {
@@ -256,10 +252,10 @@ public class Controller implements Initializable {
             mainpageStage = new Stage();
             mainpageStage.initModality(Modality.APPLICATION_MODAL);
             mainpageStage.setScene(new Scene(root));
+            mainpageStage.showAndWait();
         }
 
         // Show the preview window
-        mainpageStage.showAndWait();
     }
     @FXML
     public void openLoginPage() throws IOException {
@@ -293,7 +289,7 @@ public class Controller implements Initializable {
 
     @FXML
     private void startProcess() {
-        SheetManager s = new SheetManager(selectedGradeFile, selectedMatrikelFile);
+        SheetManager s = new SheetManager(selectedGradeFile);
         Bot b = new Bot(creds, s);
         b.start();
     }

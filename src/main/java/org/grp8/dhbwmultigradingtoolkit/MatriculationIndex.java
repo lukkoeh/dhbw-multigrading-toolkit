@@ -15,13 +15,13 @@ import java.util.Objects;
 public class MatriculationIndex {
 
     private final ArrayList<Student> students = new ArrayList<>();
-
+    private static MatriculationIndex INSTANCE;
     /**
      * A class that represents an index of matriculation numbers and the respective names. Provides diverse Methods to interact with
      * the dataset.
      * @param f xlsx input file to generate student index
      */
-    public MatriculationIndex(File f) {
+    private MatriculationIndex(File f) {
         try {
             FileInputStream fis = new FileInputStream(f);
             XSSFWorkbook wb = new XSSFWorkbook(fis);
@@ -56,6 +56,13 @@ public class MatriculationIndex {
         catch( Exception ex ) {
             ex.printStackTrace();
         }
+    }
+
+    public static MatriculationIndex getInstance(File f){
+        if(INSTANCE == null){
+            INSTANCE = new MatriculationIndex(f);
+        }
+        return INSTANCE;
     }
 
     /**
