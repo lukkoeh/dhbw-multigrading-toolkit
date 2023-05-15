@@ -1,5 +1,6 @@
 package org.grp8.dhbwmultigradingtoolkit;
 
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.poi.ss.usermodel.Cell;
@@ -7,11 +8,13 @@ import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.checkerframework.checker.units.qual.C;
 import org.odftoolkit.odfdom.doc.OdfSpreadsheetDocument;
 import org.odftoolkit.odfdom.dom.OdfContentDom;
 import org.w3c.dom.*;
 
 import java.io.*;
+import java.nio.charset.MalformedInputException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -70,20 +73,23 @@ public class SheetManager {
             String line = s.readLine();
             while (line != null) {
                 if (i == 0) {
+                    line = s.readLine();
                     i++;
                     continue;
                 }
                 String[] dataarr = line.split(";");
                 this.meta.put(dataarr[0], dataarr[1]);
                 line = s.readLine();
-                if (i == 9) {
+                if (i == 5) {
                     s.readLine();
                     line = s.readLine();
                     break;
                 }
                 i++;
             }
+
             while (line != null) {
+                boolean isEmpty = true;
                 String[] dataarr = line.split(";");
                 ArrayList<String> dataList = new ArrayList<>();
                 for (i = 0; i < 6; i++) {
@@ -91,18 +97,39 @@ public class SheetManager {
                         dataList.add("");
                     }else {
                         dataList.add(dataarr[i]);
+                        if(!Objects.equals(dataarr[i], "")){
+                            isEmpty = false;
+                        }
                     }
                 }
-                this.data.add(dataList);
+                if(!isEmpty){
+                    this.data.add(dataList);
+                }
                 line = s.readLine();
             }
             s.close();
+
         } catch (FileNotFoundException ex) {
             Alert a = new Alert(Alert.AlertType.ERROR);
-            a.setContentText("The file was not found. Please check the path.");
+            a.setContentText("Die Datei wurde nicht gefunden, bitte überprüfen Sie den Pfad.");
             a.showAndWait();
+        } catch (MalformedInputException e) {
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setContentText("CSV ist nicht in UTF-8 encodiert (Sh. Anleitung \"mögliche Fehlerquellen\")");
+            a.showAndWait();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("hello-view.fxml"));
+            try {
+                loader.load();
+                Controller c = loader.getController();
+                c.selectedGradeFile = null;
+                c.disableUploadButton();
+            } catch (IOException f){
+                f.printStackTrace();
+            }
+
+            return;
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            return;
         }
     }
 
@@ -138,7 +165,7 @@ public class SheetManager {
                     z++;
                 }
                 this.meta.put(metas[0], metas[1]);
-                if (i == 8) {
+                if (i == 5) {
                     break;
                 }
                 i++;
@@ -165,7 +192,16 @@ public class SheetManager {
                                 case STRING -> dataArr.add(cell.getStringCellValue());
                                 case NUMERIC -> {
                                     double d = cell.getNumericCellValue();
-                                    dataArr.add(Integer.toString((int) d));
+
+                                    if(cell.getNumericCellValue() % 1 == 0){
+                                        dataArr.add(Integer.toString((int) d));
+                                    }else{
+                                        dataArr.add(Double.toString(d));
+                                    }
+                                }
+                                case FORMULA -> {
+                                    double d = cell.getNumericCellValue();
+                                    dataArr.add(Double.toString(d));
                                 }
                             }
                         }else{
@@ -192,11 +228,11 @@ public class SheetManager {
             OdfSpreadsheetDocument ods = OdfSpreadsheetDocument.loadDocument(f);
             OdfContentDom content = ods.getContentDom();
             NodeList rowList = content.getElementsByTagName("table:table-row");
-            for (int i = 1; i < 9; i++) { //fill meta
+            for (int i = 1; i < 6; i++) { //fill meta
                 NodeList cellList = rowList.item(i).getChildNodes();
                 this.meta.put(cellList.item(0).getFirstChild().getTextContent(), cellList.item(1).getFirstChild().getTextContent());
             }
-            for (int i = 11; i < rowList.getLength(); i++) {
+            for (int i = 8; i < rowList.getLength(); i++) {
                 NodeList cellList = rowList.item(i).getChildNodes();
 
                 // Leere Zellen am Ende der Zeilen löschen

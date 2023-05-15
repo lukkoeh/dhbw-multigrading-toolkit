@@ -27,6 +27,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.StageStyle;
 
 
 public class Controller implements Initializable {
@@ -36,7 +37,7 @@ public class Controller implements Initializable {
     @FXML
     private Button previewExam;
     @FXML
-    private Button moodleUploadButton;
+    public Button moodleUploadButton;
     @FXML
     private Label matrikelTabelleOutput;
     @FXML
@@ -46,7 +47,7 @@ public class Controller implements Initializable {
     private Button cancelButton;
 
     private File selectedMatrikelFile;
-    private File selectedGradeFile;
+    public static File selectedGradeFile;
 
     @FXML
     private TextField inputuser;
@@ -118,7 +119,7 @@ public class Controller implements Initializable {
      * and updates the visibility of the preview button based on whether a file is selected.
      */
     @FXML
-    public void handleFileUploadMatrikel() {
+    private void handleFileUploadMatrikel() {
         selectedMatrikelFile = chooseFile("Matrikeltabelle auswählen", "Files", "*.xlsx", "*.csv", "*.ods");
         if (selectedGradeFile == null) {
             moodleUploadButton.setDisable(true);
@@ -143,7 +144,7 @@ public class Controller implements Initializable {
         }
     }
 
-    private void showFileError(Label label) {
+    public void showFileError(Label label) {
         label.setText("Bitte wählen Sie eine Datei aus!");
         label.getStyleClass().add("error");
     }
@@ -158,14 +159,22 @@ public class Controller implements Initializable {
     @FXML
     public void handleFileUploadGrade() {
         selectedGradeFile = chooseFile("Notentabelle auswählen", "Files", "*.xlsx", "*.csv", "*.ods");
+
         if (selectedGradeFile != null) {
             s = new SheetManager(selectedGradeFile);
-            if(s.mergeNeeded()){
-                s.mergeData(selectedMatrikelFile);
+            if(selectedMatrikelFile != null){
+                if(s.mergeNeeded()){
+                    s.mergeData(selectedMatrikelFile);
+                }
             }
-            updateFileOutputLabel(notenTabelleOutput, selectedGradeFile);
-            updatePreviewButtonVisibility(previewExam, selectedGradeFile != null);
-            moodleUploadButton.setDisable(s.mergeNeeded() && selectedMatrikelFile == null);
+
+            if (selectedGradeFile != null){ // Falls CSV-Encoding nicht stimmt, wird file = null gesetzt (sheetManager)
+                updateFileOutputLabel(notenTabelleOutput, selectedGradeFile);
+                updatePreviewButtonVisibility(previewExam, selectedGradeFile != null);
+                moodleUploadButton.setDisable(s.mergeNeeded() && selectedMatrikelFile == null);
+            }else{
+                showFileError(notenTabelleOutput);
+            }
         }
         else {
             moodleUploadButton.setDisable(true);
@@ -174,7 +183,9 @@ public class Controller implements Initializable {
         }
     }
 
-
+    public void disableUploadButton(){
+        this.moodleUploadButton.setDisable(true);
+    }
     /**
      * Opens a file chooser dialog for the user to select a file.
      *
@@ -198,7 +209,7 @@ public class Controller implements Initializable {
      * @param label The label to be updated.
      * @param file  The selected file.
      */
-    private void updateFileOutputLabel(Label label, File file) {
+    public void updateFileOutputLabel(Label label, File file) {
         if (file != null) {
             String fileName = file.getName();
             int maxLength = 25; // Set the maximum length of the displayed file name
@@ -235,18 +246,20 @@ public class Controller implements Initializable {
         creds[0] = inputuser.getText();
         creds[1] = inputpassword.getText();
         if (Objects.equals(creds[0], "") || Objects.equals(creds[1], "")) {
-            /*Alert a = new Alert(Alert.AlertType.ERROR);
+            Alert a = new Alert(Alert.AlertType.ERROR);
             a.setContentText("Bitte geben Sie Zugangsdaten ein.");
             a.showAndWait();
-            return;*/
+            return;
         }
         this.closeLoginPage(event);
         if (mainpageStage == null) {
             // connection between MainPage and LoginPage
             Parent root = FXMLLoader.load(getClass().getResource("hello-view.fxml"));
             mainpageStage = new Stage();
-            mainpageStage.initModality(Modality.APPLICATION_MODAL);
+            mainpageStage.initModality(Modality.WINDOW_MODAL);
             mainpageStage.setScene(new Scene(root));
+            mainpageStage.setResizable(false);
+            mainpageStage.initStyle(StageStyle.DECORATED);
             mainpageStage.showAndWait();
         }
 
@@ -267,10 +280,10 @@ public class Controller implements Initializable {
         creds[0] = inputuser.getText();
         creds[1] = inputpassword.getText();
         if (Objects.equals(creds[0], "") || Objects.equals(creds[1], "")) {
-            /*Alert a = new Alert(Alert.AlertType.ERROR);
+            Alert a = new Alert(Alert.AlertType.ERROR);
             a.setContentText("Bitte geben Sie Zugangsdaten ein.");
             a.showAndWait();
-            return;*/
+            return;
         }
         Stage stage = (Stage) btnrelogin.getScene().getWindow();
         stage.close();
