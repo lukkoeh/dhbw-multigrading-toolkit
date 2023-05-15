@@ -15,15 +15,14 @@ import java.util.Objects;
 public class MatriculationIndex {
 
     private final ArrayList<Student> students = new ArrayList<>();
-
+    private static MatriculationIndex INSTANCE;
     /**
      * A class that represents an index of matriculation numbers and the respective names. Provides diverse Methods to interact with
      * the dataset.
-     * @param path path to xlsx input file to generate student index
+     * @param f xlsx input file to generate student index
      */
-    public MatriculationIndex(String path) {
+    private MatriculationIndex(File f) {
         try {
-            File f = new File(path);
             FileInputStream fis = new FileInputStream(f);
             XSSFWorkbook wb = new XSSFWorkbook(fis);
             XSSFSheet sheet = wb.getSheetAt(0);
@@ -59,6 +58,13 @@ public class MatriculationIndex {
         }
     }
 
+    public static MatriculationIndex getInstance(File f){
+        if(INSTANCE == null){
+            INSTANCE = new MatriculationIndex(f);
+        }
+        return INSTANCE;
+    }
+
     /**
      * A simple utility method to skip lines in iterators.
      * @param itr The iterator that should be skipped
@@ -82,5 +88,9 @@ public class MatriculationIndex {
         }
         System.out.println("Student with number: " + number + " was not found.");
         return null;
+    }
+
+    public ArrayList<Student> getStudents() {
+        return students;
     }
 }

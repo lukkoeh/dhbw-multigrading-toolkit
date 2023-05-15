@@ -34,7 +34,8 @@ public class SheetManager {
     private final HashMap<String, String> meta = new HashMap<>();
     private final ArrayList<ArrayList<String>> data = new ArrayList<>(); // example: Number (String) + all other columns as arraylist
 
-    public SheetManager(String path, String pathmatrikel) {
+    public SheetManager(File table) {
+        String path = table.getPath();
         try {
             String extension = FilenameUtils.getExtension(path);
             switch (extension) {
@@ -42,11 +43,18 @@ public class SheetManager {
                 case "xlsx" -> parseXLSX(path);
                 case "ods" -> parseODS(path);
             }
-            mergeData(pathmatrikel);
-
-        } catch (Exception ex) {
+        } catch(Exception ex) {
             ex.printStackTrace();
         }
+    }
+
+    public boolean mergeNeeded() {
+        for (ArrayList<String> element : data) {
+            if (element.get(1).equals("") || element.get(2).equals("")) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -89,9 +97,6 @@ public class SheetManager {
                 line = s.readLine();
             }
             s.close();
-            Alert a = new Alert(Alert.AlertType.INFORMATION);
-            a.setContentText(this.meta.toString() + this.data.toString());
-            a.showAndWait();
         } catch (FileNotFoundException ex) {
             Alert a = new Alert(Alert.AlertType.ERROR);
             a.setContentText("The file was not found. Please check the path.");
@@ -174,9 +179,6 @@ public class SheetManager {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        Alert a = new Alert(Alert.AlertType.INFORMATION);
-        a.setContentText(this.meta.toString() + this.data.toString());
-        a.showAndWait();
     }
 
     /**
@@ -228,19 +230,16 @@ public class SheetManager {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        Alert a = new Alert(Alert.AlertType.INFORMATION);
-        a.setContentText(this.meta.toString() + this.data.toString());
-        a.showAndWait();
     }
-
+    
     /**
      * The mergeData function joins the given table with the existing data on the SheetManager object, thus creating a complete
      * Array.
-     * @param path path to the table to generate index
+     * @param matriculationFile table file to generate index
      */
-    private void mergeData(String path) {
+    public void mergeData(File matriculationFile) {
         try{
-            MatriculationIndex index = new MatriculationIndex(path);
+            MatriculationIndex index = MatriculationIndex.getInstance(matriculationFile);
             for (ArrayList<String> tmp : this.data) {
                 if (!Objects.equals(tmp.get(0), "")) {
                     Student s = index.findStudentByNumber(tmp.get(0));
@@ -248,7 +247,6 @@ public class SheetManager {
                     tmp.set(2, s.getLastname());
                 }
             }
-            System.out.println(this.data);
         } catch (Exception ex){
             Alert a = new Alert(Alert.AlertType.ERROR);
             a.setContentText("Es ist ein Fehler beim Verarbeiten der Matrikelnummern aufgetreten. Bitte überprüfen Sie die Matrikeltabelle.");
@@ -260,12 +258,10 @@ public class SheetManager {
     }
 
     public HashMap<String, String> getMeta() {
-        System.out.println(this.meta);
         return meta;
     }
 
     public ArrayList<ArrayList<String>> getData() {
-        System.out.println(this.data);
         return data;
     }
 

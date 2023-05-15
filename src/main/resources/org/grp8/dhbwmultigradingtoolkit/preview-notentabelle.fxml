@@ -5,7 +5,7 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="550.0" prefWidth="924.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.grp8.dhbwmultigradingtoolkit.Controller">
+<AnchorPane prefHeight="550.0" prefWidth="924.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.grp8.dhbwmultigradingtoolkit.PreviewController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8e1016" height="40.0" stroke="BLACK" strokeType="INSIDE" width="924.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
       <ScrollBar layoutX="903.0" layoutY="40.0" orientation="VERTICAL" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0" />
@@ -13,5 +13,15 @@
          <font>
             <Font name="Arial Bold" size="22.0" />
          </font></Label>
+      <TableView fx:id="tablepreviewdata" layoutY="40.0" prefHeight="510.0" prefWidth="924.0">
+        <columns>
+            <TableColumn fx:id="colno" prefWidth="161.0" text="Matrikelnummer" />
+          <TableColumn fx:id="colfirstname" prefWidth="94.0" text="Vorname" />
+          <TableColumn fx:id="collastname" prefWidth="92.0" text="Nachname" />
+            <TableColumn fx:id="colpoints" prefWidth="125.0" text="Erreichte Punkte" />
+            <TableColumn fx:id="colpercent" prefWidth="161.0" text="Prozentpunkte" />
+            <TableColumn fx:id="colfeedback" minWidth="0.0" prefWidth="290.0" text="Feedback" />
+        </columns>
+      </TableView>
    </children>
 </AnchorPane>
