@@ -39,14 +39,15 @@ public class Bot {
                 if (!loggedin) {
                     Alert a = new Alert(Alert.AlertType.ERROR);
                     a.setContentText("Beim Einloggen in Moodle ist ein Fehler aufgetreten. Bitte geben Sie ihre Zugangsdaten erneut ein.");
+                    a.showAndWait();
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("relogin.fxml"));
                     loader.load();
                     Controller c = loader.getController();
-                    botwindow.close();
+                    botwindow.quit();
                     c.openLoginPage();
                     ChromeOptions opt = new ChromeOptions();
                     opt.addArguments("headless");
-                    botwindow = new ChromeDriver();
+                    botwindow = new ChromeDriver(opt);
                     return start();
                 } else {
                     System.out.println("Login successful");
@@ -96,6 +97,9 @@ public class Bot {
         return false;
     }
 
+    public void stop(){
+        botwindow.quit();
+    }
     private boolean handleLogin() {
         WebElement usernamefield = botwindow.findElement(new By.ById("username"));
         WebElement passwordfield = botwindow.findElement(new By.ById("password"));
