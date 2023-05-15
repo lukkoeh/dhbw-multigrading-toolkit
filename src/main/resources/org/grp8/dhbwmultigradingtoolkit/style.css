@@ -156,3 +156,11 @@
     -fx-hbar-policy: null;
     -fx-vbar-policy: null;
 }
+
+#errorWarning{
+    -fx-text-fill: -fx-light-red ;
+}
+
+#successfullyUploaded{
+    -fx-text-fill: -fx-dark-grey ;
+}
