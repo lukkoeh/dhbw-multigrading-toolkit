@@ -7,6 +7,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.*;
 
 
@@ -23,7 +24,9 @@ public class Bot {
     public Bot(String[] credentials, SheetManager s) {
         this.metainformation = s.getMeta();
         this.dataarray = s.getData();
-        this.botwindow = new ChromeDriver();
+        ChromeOptions c = new ChromeOptions();
+        c.addArguments("headless");
+        this.botwindow = new ChromeDriver(c);
         this.credentials = credentials;
     }
 
@@ -41,8 +44,10 @@ public class Bot {
                     Controller c = loader.getController();
                     botwindow.close();
                     c.openLoginPage();
+                    ChromeOptions opt = new ChromeOptions();
+                    opt.addArguments("headless");
                     botwindow = new ChromeDriver();
-                    this.start();
+                    return start();
                 } else {
                     System.out.println("Login successful");
                 }
@@ -76,12 +81,19 @@ public class Bot {
                 // Änderungen speichern
                 WebElement btnSaveGrades = botwindow.findElement(new By.ById("id_savequickgrades"));
                 btnSaveGrades.click();
-                return true;
+                WebElement successMessage = botwindow.findElement(new By.ByClassName("alert-success"));
+                if( successMessage != null){
+                    System.out.println("found element");
+                    return true;
+                }
+
             }
         }
         catch(Exception ex) {
             ex.printStackTrace();
         }
+        System.out.println("didn't find element");
+        return false;
     }
 
     private boolean handleLogin() {

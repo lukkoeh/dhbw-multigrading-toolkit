@@ -120,7 +120,7 @@ public class Controller implements Initializable {
      */
     @FXML
     private void handleFileUploadMatrikel() {
-        selectedMatrikelFile = chooseFile("Matrikeltabelle auswählen", "Files", "*.xlsx", "*.csv", "*.ods");
+        selectedMatrikelFile = chooseFile("Matrikeltabelle auswählen", "Excel Files", "*.xlsx");
         if (selectedGradeFile == null) {
             moodleUploadButton.setDisable(true);
             updateFileOutputLabel(matrikelTabelleOutput, selectedMatrikelFile);
@@ -336,6 +336,7 @@ public class Controller implements Initializable {
         } else {
             showErrorUploadWarning();
         }
+
     }
 
 
