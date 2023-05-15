@@ -27,7 +27,7 @@ public class Bot {
         this.credentials = credentials;
     }
 
-    public void start() {
+    public boolean start() {
         try {
             this.starturl = this.metainformation.get("Abgabeelement") + "&action=grading";
             botwindow.get(starturl);
@@ -76,7 +76,7 @@ public class Bot {
                 // Änderungen speichern
                 WebElement btnSaveGrades = botwindow.findElement(new By.ById("id_savequickgrades"));
                 btnSaveGrades.click();
-
+                return true;
             }
         }
         catch(Exception ex) {
