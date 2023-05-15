@@ -9,7 +9,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
 import java.awt.*;
-import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.io.File;
 import java.net.URI;
@@ -56,7 +55,7 @@ public class Controller implements Initializable {
     @FXML
     private Button btnrelogin;
 
-    private static String[] creds = new String[2];
+    private static final String[] creds = new String[2];
 
     private SheetManager s;
     private Stage mainpageStage;
@@ -97,8 +96,8 @@ public class Controller implements Initializable {
     private void showPreviewExam(ActionEvent event) throws IOException {
         ArrayList<ArrayList<String>> data = s.getData();
         ObservableList<PreviewGrade> odatatmp = FXCollections.observableArrayList();
-        for (int i = 0; i < data.size(); i++) {
-            PreviewGrade p = new PreviewGrade(data.get(i).get(0), data.get(i).get(1), data.get(i).get(2), data.get(i).get(3), data.get(i).get(4), data.get(i).get(5));
+        for (ArrayList<String> datum : data) {
+            PreviewGrade p = new PreviewGrade(datum.get(0), datum.get(1), datum.get(2), datum.get(3), datum.get(4), datum.get(5));
             odatatmp.add(p);
         }
         PreviewController.odata = odatatmp;
@@ -166,11 +165,7 @@ public class Controller implements Initializable {
             }
             updateFileOutputLabel(notenTabelleOutput, selectedGradeFile);
             updatePreviewButtonVisibility(previewExam, selectedGradeFile != null);
-            if(s.mergeNeeded() && selectedMatrikelFile == null){
-                moodleUploadButton.setDisable(true);
-            }else{
-                moodleUploadButton.setDisable(false);
-            }
+            moodleUploadButton.setDisable(s.mergeNeeded() && selectedMatrikelFile == null);
         }
         else {
             moodleUploadButton.setDisable(true);
@@ -289,7 +284,6 @@ public class Controller implements Initializable {
 
     @FXML
     private void startProcess() {
-        SheetManager s = new SheetManager(selectedGradeFile);
         Bot b = new Bot(creds, s);
         b.start();
     }
