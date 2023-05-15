@@ -291,4 +291,45 @@ public class Controller implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
     }
+
+    private void showErrorUploadWarning() {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("dialog-window-error.fxml"));
+            Stage dialogStage = new Stage();
+            dialogStage.initModality(Modality.APPLICATION_MODAL);
+            dialogStage.setScene(new Scene(root));
+            dialogStage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void showSuccessUploadAlert() {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("dialog-window-success.fxml"));
+            Stage dialogStage = new Stage();
+            dialogStage.initModality(Modality.APPLICATION_MODAL);
+            dialogStage.setScene(new Scene(root));
+            dialogStage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void handleMoodleUploadButton(ActionEvent event) {
+        startProcess();
+
+        boolean uploadSuccess = false; // Assume upload was unsuccessful initially
+
+        // Perform upload process and set uploadSuccess accordingly
+
+        if (uploadSuccess) {
+            showSuccessUploadAlert();
+        } else {
+            showErrorUploadWarning();
+        }
+    }
+
+
 }
