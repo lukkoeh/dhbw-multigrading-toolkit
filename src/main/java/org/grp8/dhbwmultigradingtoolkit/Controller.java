@@ -63,9 +63,19 @@ public class Controller implements Initializable {
 
     //linking Instruction-Icon to browser-pdf-document view
     @FXML
-    private void openPdf(ActionEvent event) throws URISyntaxException, IOException {
-        File manual = new File("./Anleitung.pdf");
-        Desktop.getDesktop().open(manual);
+    private void openPdf()  {
+        if(Desktop.isDesktopSupported()){
+            new Thread(() -> {
+                try{
+                    String currentDir = new File("").getAbsolutePath();
+                    String finalPath = currentDir + "/Anleitung.pdf";
+                    File f = new File(finalPath);
+                    Desktop.getDesktop().open(f);
+                }catch (Exception ex){
+                    ex.printStackTrace();
+                }
+            }).start();
+        }
     }
 
 
