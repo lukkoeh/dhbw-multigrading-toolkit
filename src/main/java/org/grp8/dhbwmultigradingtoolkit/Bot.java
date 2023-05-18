@@ -25,7 +25,7 @@ public class Bot {
     private final ArrayList<ArrayList<String>> dataarray;
 
     /**
-     * This function intitializes the bot using the necessary data provides by its parameters.
+     * This function initializes the bot using the necessary data provides by its parameters.
      * @param credentials an array of strings representing the moodle-credentials used to log into moodle
      * @param s requires an instance of SheetManager, which was already provided with necessary files.
      */
