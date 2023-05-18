@@ -1,5 +1,8 @@
 package org.grp8.dhbwmultigradingtoolkit;
 
+/**
+ * A Class that represents a dataset of grades for population of TableView.
+ */
 public class PreviewGrade {
     private String matriculation;
     private String firstname;

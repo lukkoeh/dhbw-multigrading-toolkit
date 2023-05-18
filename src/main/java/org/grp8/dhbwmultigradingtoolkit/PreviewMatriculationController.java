@@ -11,6 +11,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * A custom controller to handle the preview-window of Matriculation
+ */
 public class PreviewMatriculationController implements Initializable {
     @FXML
     private TableView<Student> tablepreviewmatrikel;
@@ -22,6 +25,17 @@ public class PreviewMatriculationController implements Initializable {
     private TableColumn<Student, String> collastname;
 
     public static ObservableList<Student> odata = FXCollections.observableArrayList();
+
+    /**
+     * A function to create cellFactories to populate the TableView.
+     * @param url
+     * The location used to resolve relative paths for the root object, or
+     * {@code null} if the location is not known.
+     *
+     * @param resourceBundle
+     * The resources used to localize the root object, or {@code null} if
+     * the root object was not localized.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         colno.setCellValueFactory(new PropertyValueFactory<Student, String>("no"));

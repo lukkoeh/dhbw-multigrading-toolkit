@@ -11,6 +11,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * A special Controller for controlling the Preview-Window for Grades
+ */
+
 public class PreviewController implements Initializable {
     @FXML
     private TableView<PreviewGrade> tablepreviewdata;
@@ -30,6 +34,17 @@ public class PreviewController implements Initializable {
     private TableColumn<PreviewGrade, String> colfeedback;
 
     public static ObservableList<PreviewGrade> odata = FXCollections.observableArrayList();
+
+    /**
+     * Create cellFactories to populate the tableview.
+     * @param url
+     * The location used to resolve relative paths for the root object, or
+     * {@code null} if the location is not known.
+     *
+     * @param resourceBundle
+     * The resources used to localize the root object, or {@code null} if
+     * the root object was not localized.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         colno.setCellValueFactory(new PropertyValueFactory<PreviewGrade, String>("matriculation"));

@@ -7,6 +7,9 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 
+/**
+ * The entry point of the Application. Initializes the main window.
+ */
 public class Main extends Application {
 
     @Override

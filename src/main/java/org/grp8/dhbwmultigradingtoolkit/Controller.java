@@ -11,8 +11,6 @@ import javafx.scene.control.*;
 import java.awt.*;
 import java.io.IOException;
 import java.io.File;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -29,6 +27,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.StageStyle;
 
+/**
+ * The Controller class contains methods to interact with the Main UI.
+ */
 
 public class Controller implements Initializable {
     //Declaration of Button
@@ -61,7 +62,9 @@ public class Controller implements Initializable {
     private SheetManager s;
     private Stage mainpageStage;
 
-    //linking Instruction-Icon to browser-pdf-document view
+    /**
+     * This function uses the default PDF-Viewer to open the manual.
+     */
     @FXML
     private void openPdf()  {
         if(Desktop.isDesktopSupported()){
@@ -78,12 +81,13 @@ public class Controller implements Initializable {
         }
     }
 
-
-    //linking eye-button to previews
-
-    //1. Preview of Matrikeltabelle
     private Stage previewMatrikelStage;
 
+    /**
+     * A function to show the Preview table of the Matriculation-File.
+     * @param event Click Event
+     * @throws IOException If FXML Loading fails.
+     */
     @FXML
     private void showPreviewMatrikel(ActionEvent event) throws IOException {
         MatriculationIndex m = MatriculationIndex.getInstance(selectedMatrikelFile);
@@ -104,6 +108,11 @@ public class Controller implements Initializable {
     //2. Preview of Notentabelle
     private Stage previewExamStage;
 
+    /**
+     * A function to show a preview of the grading table, with merged data!
+     * @param event Click Event
+     * @throws IOException If FXML Load error
+     */
     @FXML
     private void showPreviewExam(ActionEvent event) throws IOException {
         ArrayList<ArrayList<String>> data = s.getData();
@@ -276,6 +285,11 @@ public class Controller implements Initializable {
 
         // Show the preview window
     }
+
+    /**
+     * A function to show the login Page in case the login fails.
+     * @throws IOException FXML Load
+     */
     @FXML
     public void openLoginPage() throws IOException {
         Stage stage = new Stage();
@@ -286,8 +300,12 @@ public class Controller implements Initializable {
         stage.showAndWait();
     }
 
+    /**
+     * A function to update the static credentials value to be used by the Bot class.
+     * @param event Click Event
+     */
     @FXML
-    private void updateLoginData(ActionEvent event) throws IOException {
+    private void updateLoginData(ActionEvent event) {
         creds[0] = inputuser.getText();
         creds[1] = inputpassword.getText();
         if (Objects.equals(creds[0], "") || Objects.equals(creds[1], "")) {
@@ -299,18 +317,35 @@ public class Controller implements Initializable {
         Stage stage = (Stage) btnrelogin.getScene().getWindow();
         stage.close();
     }
+
+    /**
+     * Closes the login window for the first time.
+     * @param event Click Event
+     */
     @FXML
-    private void closeLoginPage(ActionEvent event) throws IOException {
+    private void closeLoginPage(ActionEvent event) {
 
         Stage stage = (Stage) cancelButton.getScene().getWindow();
         stage.close();
     }
 
-
+    /**
+     * Neccessary for initializable
+     * @param url
+     * The location used to resolve relative paths for the root object, or
+     * {@code null} if the location is not known.
+     *
+     * @param resourceBundle
+     * The resources used to localize the root object, or {@code null} if
+     * the root object was not localized.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
     }
 
+    /**
+     * A function to show a dialog if the moodle upload fails.
+     */
     private void showErrorUploadWarning() {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("dialog-window-error.fxml"));
@@ -323,6 +358,9 @@ public class Controller implements Initializable {
         }
     }
 
+    /**
+     * A function to show a dialog if the moodle upload is successfully completed.
+     */
     private void showSuccessUploadAlert() {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("dialog-window-success.fxml"));
@@ -335,6 +373,11 @@ public class Controller implements Initializable {
         }
     }
 
+
+    /**
+     * A function to handle the Button for the moodle upload. Handles errors, opens the Bot, starts it and stops it.
+     * @param event Click Event
+     */
     @FXML
     private void handleMoodleUploadButton(ActionEvent event) {
         Bot b = new Bot(creds, s);

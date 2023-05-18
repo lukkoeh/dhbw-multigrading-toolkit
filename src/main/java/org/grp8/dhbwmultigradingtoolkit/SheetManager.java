@@ -8,7 +8,6 @@ import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.checkerframework.checker.units.qual.C;
 import org.odftoolkit.odfdom.doc.OdfSpreadsheetDocument;
 import org.odftoolkit.odfdom.dom.OdfContentDom;
 import org.w3c.dom.*;
@@ -293,10 +292,18 @@ public class SheetManager {
 
     }
 
+    /**
+     * A function that returns the full meta array
+     * @return the meta array as a hashmap
+     */
     public HashMap<String, String> getMeta() {
         return meta;
     }
 
+    /**
+     * A function that returns the full data array
+     * @return the data array as an Arraylist
+     */
     public ArrayList<ArrayList<String>> getData() {
         return data;
     }

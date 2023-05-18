@@ -1,7 +1,6 @@
 package org.grp8.dhbwmultigradingtoolkit;
 
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -14,13 +13,22 @@ import org.openqa.selenium.support.ui.*;
 import java.time.Duration;
 import java.util.*;
 
-
+/**
+ * The Bot class handles all selenium-operations. It is initializied with a SheetManager as well as credentials for moodle
+ * It gets its data from said SheetManager and the credentials, all other operations are handled by itself.
+ */
 public class Bot {
     private String starturl;
     private WebDriver botwindow;
-    private String[] credentials = new String[2];
+    private String[] credentials;
     private final HashMap<String, String> metainformation;
     private final ArrayList<ArrayList<String>> dataarray;
+
+    /**
+     * This function intitializes the bot using the necessary data provides by its parameters.
+     * @param credentials an array of strings representing the moodle-credentials used to log into moodle
+     * @param s requires an instance of SheetManager, which was already provided with necessary files.
+     */
     public Bot(String[] credentials, SheetManager s) {
         this.metainformation = s.getMeta();
         this.dataarray = s.getData();
@@ -30,6 +38,11 @@ public class Bot {
         this.credentials = credentials;
     }
 
+    /**
+     * This function starts the bot, it uses the botwindow initialized in the Bot-Class constructor and tries to fill out
+     * the data of the SheetManager class into Moodle.
+     * @return returns either a boolean if the Bot failed OR recusively calls itself to repeat execution
+     */
     public boolean start() {
         try {
             this.starturl = this.metainformation.get("Abgabeelement") + "&action=grading";
@@ -68,7 +81,6 @@ public class Bot {
                     WebElement gradeInputField = gradeInputCell.findElement(By.xpath(".//input"));
 
                     gradeInputField.clear();
-                    // TODO: Evtl. Prozentpunkte errechnen, aktuell wird die Prozentpunkte-Spalte aus der Tabellenvorlage verwendet
                     gradeInputField.sendKeys(row.get(4));
 
 
@@ -97,9 +109,17 @@ public class Bot {
         return false;
     }
 
+    /**
+     * The stop() Function closes the botwindow to also quit the chromedriver process.
+     */
     public void stop(){
         botwindow.quit();
     }
+
+    /**
+     * A function to log into moodle, gets repeated every time the login fails (see return)
+     * @return returns a boolean to determine if a login attempt was successful.
+     */
     private boolean handleLogin() {
         WebElement usernamefield = botwindow.findElement(new By.ById("username"));
         WebElement passwordfield = botwindow.findElement(new By.ById("password"));
@@ -110,12 +130,25 @@ public class Bot {
         return Objects.equals(botwindow.getCurrentUrl(), this.starturl);
     }
 
+    /**
+     * A function to convert a moodle-provided name string including the course into a usable firstname, lastname construction.
+     * Neccessary to use it with SheetManager's data.
+     * @param unformattedName The unformatted Moodle string
+     * @return the converted String ("firstname lastname").
+     */
     private String getFormattedStudentName(String unformattedName) {
         String[] name = unformattedName.split(" ");
         ArrayList<String> names = new ArrayList<>(Arrays.asList(name));
         names.remove(0);
         return String.join(" ", names);
     }
+
+    /**
+     * A function to find the respective entry in the dataarray for a specific name construction.
+     * Throws an exception if a row was not found.
+     * @param name takes a converted name from getFormattedStudentName() in "firstname lastname" structure.
+     * @return returns an Arraylist of Strings containing the data for a specific name
+     */
     public ArrayList<String> getRowByName(String name) {
         for (ArrayList<String> strings : this.dataarray) {
             String tmp = String.join(" ", strings.get(1), strings.get(2));
@@ -126,6 +159,10 @@ public class Bot {
         throw new NoSuchElementException("Dataset was not found: " + name);
     }
 
+    /**
+     * Using the fastgrading mechanism of moodle requires activation. We make sure that it is enabled. Also, we set the limiter
+     * to "all" to show ALL Students.
+     */
     public void prepareGrading() {
         WebElement w = new WebDriverWait(botwindow, Duration.ofSeconds(10)).until(ExpectedConditions.elementToBeClickable(new By.ById("id_quickgrading")));
         if (w.getAttribute("checked") == null) {
@@ -134,6 +171,5 @@ public class Bot {
         WebElement q = new WebDriverWait(botwindow, Duration.ofSeconds(10)).until(ExpectedConditions.elementToBeClickable(new By.ById("id_perpage")));
         Select se = new Select(q);
         se.selectByVisibleText("Alle");
-        // TODO: evtl. Teilnehmer benachrichtigen an
     }
 }
