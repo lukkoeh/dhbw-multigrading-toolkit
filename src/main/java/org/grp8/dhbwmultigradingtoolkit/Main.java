@@ -7,6 +7,9 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 
+/**
+ * The entry point of the Application. Initializes the main window.
+ */
 public class Main extends Application {
 
     @Override
@@ -15,6 +18,7 @@ public class Main extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(fxmlUrl);
         Scene scene = new Scene(fxmlLoader.load());
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
     }
 

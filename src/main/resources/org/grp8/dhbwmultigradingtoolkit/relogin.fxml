@@ -30,7 +30,7 @@
             <RowConstraints maxHeight="38.0" minHeight="10.0" prefHeight="15.0" vgrow="SOMETIMES" />
             </rowConstraints>
          <children>
-            <Button id="login-button" fx:id="btnlogin" minHeight="35.0" minWidth="35.0" mnemonicParsing="false" onAction="#showMainPage" prefHeight="42.0" prefWidth="187.0" text="Anmelden" GridPane.columnIndex="7" GridPane.rowIndex="6" />
+            <Button id="login-button" fx:id="btnrelogin" minHeight="35.0" minWidth="35.0" mnemonicParsing="false" onAction="#updateLoginData" prefHeight="42.0" prefWidth="187.0" text="Anmelden" GridPane.columnIndex="7" GridPane.rowIndex="6" />
              <Rectangle height="70.0" styleClass="rounded-rectangle" width="495.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Rectangle height="69.0" styleClass="rounded-rectangle" width="493.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
 

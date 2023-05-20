@@ -1,5 +1,8 @@
 package org.grp8.dhbwmultigradingtoolkit;
 
+/**
+ * A Class to represent a Student as an Object, also for population of TableViews.
+ */
 public class Student {
     private String no;
     private String firstname;

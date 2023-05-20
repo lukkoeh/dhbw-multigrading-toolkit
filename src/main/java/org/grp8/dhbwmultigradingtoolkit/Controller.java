@@ -1,31 +1,44 @@
 package org.grp8.dhbwmultigradingtoolkit;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.fxml.Initializable;
+import javafx.scene.control.*;
+
 import java.awt.*;
 import java.io.IOException;
 import java.io.File;
-import java.net.URI;
-import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Objects;
+import java.util.ResourceBundle;
+
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.StageStyle;
 
+/**
+ * The Controller class contains methods to interact with the Main UI.
+ */
 
-public class Controller {
+public class Controller implements Initializable {
     //Declaration of Button
     @FXML
     private Button previewMatrikel;
     @FXML
     private Button previewExam;
     @FXML
-    private Button moodleUploadButton;
+    public Button moodleUploadButton;
     @FXML
     private Label matrikelTabelleOutput;
     @FXML
@@ -35,30 +48,58 @@ public class Controller {
     private Button cancelButton;
 
     private File selectedMatrikelFile;
-    private File selectedGradeFile;
+    public static File selectedGradeFile;
 
-
-    //linking Instruction-Icon to browser-pdf-document view
     @FXML
-    private void openPdf(ActionEvent event) throws URISyntaxException, IOException {
-        Desktop.getDesktop().browse(new URI("https://acrobat.adobe.com/link/review?uri=urn:aaid:scds:US:f8ff6011-19f7-45aa-bdbe-ba5d5b228860"));
+    private TextField inputuser;
+    @FXML
+    private PasswordField inputpassword;
+    @FXML
+    private Button btnrelogin;
+
+    private static final String[] creds = new String[2];
+
+    private SheetManager s;
+    private Stage mainpageStage;
+
+    /**
+     * This function uses the default PDF-Viewer to open the manual.
+     */
+    @FXML
+    private void openPdf()  {
+        if(Desktop.isDesktopSupported()){
+            new Thread(() -> {
+                try{
+                    String currentDir = new File("").getAbsolutePath();
+                    String finalPath = currentDir + "/Anleitung.pdf";
+                    File f = new File(finalPath);
+                    Desktop.getDesktop().open(f);
+                }catch (Exception ex){
+                    ex.printStackTrace();
+                }
+            }).start();
+        }
     }
 
-
-    //linking eye-button to previews
-
-    //1. Preview of Matrikeltabelle
     private Stage previewMatrikelStage;
 
+    /**
+     * A function to show the Preview table of the Matriculation-File.
+     * @param event Click Event
+     * @throws IOException If FXML Loading fails.
+     */
     @FXML
     private void showPreviewMatrikel(ActionEvent event) throws IOException {
-        if (previewMatrikelStage == null) {
-            // Load preview-matrikeltabelle.fxml and create a new stage
-            Parent root = FXMLLoader.load(getClass().getResource("preview-matrikeltabelle.fxml"));
-            previewMatrikelStage = new Stage();
-            previewMatrikelStage.initModality(Modality.APPLICATION_MODAL);
-            previewMatrikelStage.setScene(new Scene(root));
-        }
+        MatriculationIndex m = MatriculationIndex.getInstance(selectedMatrikelFile);
+        ArrayList<Student> data = m.getStudents();
+        ObservableList<Student> odatatmp = FXCollections.observableArrayList();
+        odatatmp.addAll(data);
+        PreviewMatriculationController.odata = odatatmp;
+        // Load preview-matrikeltabelle.fxml and create a new stage
+        Parent root = FXMLLoader.load(getClass().getResource("preview-matrikeltabelle.fxml"));
+        previewMatrikelStage = new Stage();
+        previewMatrikelStage.initModality(Modality.APPLICATION_MODAL);
+        previewMatrikelStage.setScene(new Scene(root));
 
         // Show the preview window
         previewMatrikelStage.showAndWait();
@@ -67,18 +108,27 @@ public class Controller {
     //2. Preview of Notentabelle
     private Stage previewExamStage;
 
+    /**
+     * A function to show a preview of the grading table, with merged data!
+     * @param event Click Event
+     * @throws IOException If FXML Load error
+     */
     @FXML
     private void showPreviewExam(ActionEvent event) throws IOException {
-        if (previewExamStage == null) {
-            // Load preview-notentabelle.fxml and create a new stage
-            Parent root = FXMLLoader.load(getClass().getResource("preview-notentabelle.fxml"));
-            previewExamStage = new Stage();
-            previewExamStage.initModality(Modality.APPLICATION_MODAL);
-            previewExamStage.setScene(new Scene(root));
+        ArrayList<ArrayList<String>> data = s.getData();
+        ObservableList<PreviewGrade> odatatmp = FXCollections.observableArrayList();
+        for (ArrayList<String> datum : data) {
+            PreviewGrade p = new PreviewGrade(datum.get(0), datum.get(1), datum.get(2), datum.get(3), datum.get(4), datum.get(5));
+            odatatmp.add(p);
         }
-
-        // Show the preview window
+        PreviewController.odata = odatatmp;
+        // Load preview-notentabelle.fxml and create a new stage
+        Parent root = FXMLLoader.load(getClass().getResource("preview-notentabelle.fxml"));
+        previewExamStage = new Stage();
+        previewExamStage.initModality(Modality.APPLICATION_MODAL);
+        previewExamStage.setScene(new Scene(root));
         previewExamStage.showAndWait();
+        // Show the preview window
     }
 
 
@@ -89,11 +139,34 @@ public class Controller {
      * and updates the visibility of the preview button based on whether a file is selected.
      */
     @FXML
-    public void handleFileUploadMatrikel() {
-        selectedMatrikelFile = chooseFile("Matrikeltabelle auswählen", "Files", "*.xlsx", "*.csv", "*.ods");
-        updateFileOutputLabel(matrikelTabelleOutput, selectedMatrikelFile);
-        enableMoodleUploadButtonIfReady();
-        updatePreviewButtonVisibility(previewMatrikel, selectedMatrikelFile != null);
+    private void handleFileUploadMatrikel() {
+        selectedMatrikelFile = chooseFile("Matrikeltabelle auswählen", "Excel Files", "*.xlsx");
+        if (selectedGradeFile == null) {
+            moodleUploadButton.setDisable(true);
+            updateFileOutputLabel(matrikelTabelleOutput, selectedMatrikelFile);
+            updatePreviewButtonVisibility(previewMatrikel, selectedMatrikelFile != null);
+            return;
+        }
+        s = new SheetManager(selectedGradeFile);
+        if (selectedMatrikelFile != null) {
+            if(s.mergeNeeded()){
+                s.mergeData(selectedMatrikelFile);
+                moodleUploadButton.setDisable(false);
+                updateFileOutputLabel(matrikelTabelleOutput, selectedMatrikelFile);
+                updatePreviewButtonVisibility(previewMatrikel, selectedMatrikelFile != null);
+            }
+        }
+        else {
+            if(s.mergeNeeded()){
+                moodleUploadButton.setDisable(true);
+                showFileError(matrikelTabelleOutput);
+            }
+        }
+    }
+
+    public void showFileError(Label label) {
+        label.setText("Bitte wählen Sie eine Datei aus!");
+        label.getStyleClass().add("error");
     }
 
 
@@ -106,12 +179,33 @@ public class Controller {
     @FXML
     public void handleFileUploadGrade() {
         selectedGradeFile = chooseFile("Notentabelle auswählen", "Files", "*.xlsx", "*.csv", "*.ods");
-        updateFileOutputLabel(notenTabelleOutput, selectedGradeFile);
-        enableMoodleUploadButtonIfReady();
-        updatePreviewButtonVisibility(previewExam, selectedGradeFile != null);
+
+        if (selectedGradeFile != null) {
+            s = new SheetManager(selectedGradeFile);
+            if(selectedMatrikelFile != null){
+                if(s.mergeNeeded()){
+                    s.mergeData(selectedMatrikelFile);
+                }
+            }
+
+            if (selectedGradeFile != null){ // Falls CSV-Encoding nicht stimmt, wird file = null gesetzt (sheetManager)
+                updateFileOutputLabel(notenTabelleOutput, selectedGradeFile);
+                updatePreviewButtonVisibility(previewExam, selectedGradeFile != null);
+                moodleUploadButton.setDisable(s.mergeNeeded() && selectedMatrikelFile == null);
+            }else{
+                showFileError(notenTabelleOutput);
+            }
+        }
+        else {
+            moodleUploadButton.setDisable(true);
+            notenTabelleOutput.setText("Bitte wählen Sie eine Datei aus!");
+            notenTabelleOutput.getStyleClass().add("error");
+        }
     }
 
-
+    public void disableUploadButton(){
+        this.moodleUploadButton.setDisable(true);
+    }
     /**
      * Opens a file chooser dialog for the user to select a file.
      *
@@ -135,7 +229,7 @@ public class Controller {
      * @param label The label to be updated.
      * @param file  The selected file.
      */
-    private void updateFileOutputLabel(Label label, File file) {
+    public void updateFileOutputLabel(Label label, File file) {
         if (file != null) {
             String fileName = file.getName();
             int maxLength = 25; // Set the maximum length of the displayed file name
@@ -146,9 +240,6 @@ public class Controller {
                 label.setText(fileName);
             }
             label.getStyleClass().removeAll("error");
-        } else {
-            label.setText("Bitte wählen Sie eine Datei aus !");
-            label.getStyleClass().add("error");
         }
     }
 
@@ -168,30 +259,139 @@ public class Controller {
      * Enables or disables the moodleUploadButton based on the availability of both the selectedMatrikelFile and selectedGradeFile.
      * The moodleUploadButton is disabled if either of the files is null.
      */
-    private void enableMoodleUploadButtonIfReady() {
-        moodleUploadButton.setDisable(selectedGradeFile == null);
-    }
 
-    private Stage mainpageStage;
 
     @FXML
     private void showMainPage(ActionEvent event) throws IOException {
+        creds[0] = inputuser.getText();
+        creds[1] = inputpassword.getText();
+        if (Objects.equals(creds[0], "") || Objects.equals(creds[1], "")) {
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setContentText("Bitte geben Sie Zugangsdaten ein.");
+            a.showAndWait();
+            return;
+        }
+        this.closeLoginPage(event);
         if (mainpageStage == null) {
             // connection between MainPage and LoginPage
             Parent root = FXMLLoader.load(getClass().getResource("hello-view.fxml"));
             mainpageStage = new Stage();
-            mainpageStage.initModality(Modality.APPLICATION_MODAL);
+            mainpageStage.initModality(Modality.WINDOW_MODAL);
             mainpageStage.setScene(new Scene(root));
+            mainpageStage.setResizable(false);
+            mainpageStage.initStyle(StageStyle.DECORATED);
+            mainpageStage.showAndWait();
         }
 
         // Show the preview window
-        mainpageStage.showAndWait();
     }
 
+    /**
+     * A function to show the login Page in case the login fails.
+     * @throws IOException FXML Load
+     */
     @FXML
-    private void closeLoginPage(ActionEvent event) throws IOException {
+    public void openLoginPage() throws IOException {
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        Parent root = FXMLLoader.load(getClass().getResource("relogin.fxml"));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.showAndWait();
+    }
+
+    /**
+     * A function to update the static credentials value to be used by the Bot class.
+     * @param event Click Event
+     */
+    @FXML
+    private void updateLoginData(ActionEvent event) {
+        creds[0] = inputuser.getText();
+        creds[1] = inputpassword.getText();
+        if (Objects.equals(creds[0], "") || Objects.equals(creds[1], "")) {
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setContentText("Bitte geben Sie Zugangsdaten ein.");
+            a.showAndWait();
+            return;
+        }
+        Stage stage = (Stage) btnrelogin.getScene().getWindow();
+        stage.close();
+    }
+
+    /**
+     * Closes the login window for the first time.
+     * @param event Click Event
+     */
+    @FXML
+    private void closeLoginPage(ActionEvent event) {
 
         Stage stage = (Stage) cancelButton.getScene().getWindow();
         stage.close();
     }
+
+    /**
+     * Neccessary for initializable
+     * @param url
+     * The location used to resolve relative paths for the root object, or
+     * {@code null} if the location is not known.
+     *
+     * @param resourceBundle
+     * The resources used to localize the root object, or {@code null} if
+     * the root object was not localized.
+     */
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+    }
+
+    /**
+     * A function to show a dialog if the moodle upload fails.
+     */
+    private void showErrorUploadWarning() {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("dialog-window-error.fxml"));
+            Stage dialogStage = new Stage();
+            dialogStage.initModality(Modality.APPLICATION_MODAL);
+            dialogStage.setScene(new Scene(root));
+            dialogStage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * A function to show a dialog if the moodle upload is successfully completed.
+     */
+    private void showSuccessUploadAlert() {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("dialog-window-success.fxml"));
+            Stage dialogStage = new Stage();
+            dialogStage.initModality(Modality.APPLICATION_MODAL);
+            dialogStage.setScene(new Scene(root));
+            dialogStage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    /**
+     * A function to handle the Button for the moodle upload. Handles errors, opens the Bot, starts it and stops it.
+     * @param event Click Event
+     */
+    @FXML
+    private void handleMoodleUploadButton(ActionEvent event) {
+        Bot b = new Bot(creds, s);
+        boolean uploadSuccess = b.start();
+
+        // Perform upload process and set uploadSuccess accordingly
+
+        if (uploadSuccess) {
+            showSuccessUploadAlert();
+        } else {
+            showErrorUploadWarning();
+        }
+        b.stop();
+    }
+
+
 }
