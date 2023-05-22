@@ -18,7 +18,7 @@ jobs:
           java-version: 17
       - name: Run package
         run: mvn -Djar.finalName=dmt-${{matrix.os}} package
-      - name: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v3
         with:
           name: jars
           path: ./target/dmt-${{matrix.os}}.jar
